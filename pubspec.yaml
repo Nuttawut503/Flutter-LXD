@@ -1,0 +1,41 @@
+name: LXD
+description: A new Flutter project.
+
+
+version: 1.0.0+1
+
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+
+dependencies:
+  cupertino_icons: ^0.1.3
+  google_fonts: ^0.4.1
+  font_awesome_flutter: ^8.8.1
+  equatable: ^1.1.1
+
+  flutter:
+    sdk: flutter
+
+  bloc: ^3.0.0
+  flutter_bloc: ^3.2.0
+  http: ^0.12.0+4
+  meta: ^1.1.8
+  rxdart: ^0.23.1
+  firebase_core: ^0.4.4+3
+  firebase_auth: ^0.16.0
+  cloud_firestore: ^0.13.4+2
+  google_sign_in: ^4.4.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - images/
