@@ -38,4 +38,6 @@ flutter:
   uses-material-design: true
   
   assets:
-    - images/
+    - images/booking.png
+    - images/navigate.png
+    - images/search.png
