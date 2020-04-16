@@ -44,6 +44,12 @@ class App extends StatelessWidget {
             return HomeScreen(
               userRepository: _userRepository,
               isSignedIn: true,
+              user: {
+                'id': state.currentUser['id'],
+                'name': state.currentUser['name'],
+                'email': state.currentUser['email'],
+                'profile_picture_url': state.currentUser['profile_picture_url']
+              }
             );
           }
           return SplashScreen();
