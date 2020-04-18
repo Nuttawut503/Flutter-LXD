@@ -66,6 +66,27 @@ class _HomeContentState extends State<HomeContent> {
     super.dispose();
   }
 
+  donutWidget(){
+    return new Stack(
+      children: <Widget>[
+        Container(decoration: BoxDecoration(color: Color.fromRGBO(255, 199, 44, 1.0)),),
+        Positioned(
+            top: 16.0,
+            left: 16.0,
+            child: ProfileButton(
+              userRepository: _userRepository,
+              isSignedIn: _isSignedIn,
+              user: _currentUser,
+            )
+        ),
+        Positioned(
+            top: 16.0,
+            right: 16.0,
+            child: FloatingButton()
+        ),
+      ],
+    );
+  }
 
 
   @override
@@ -73,23 +94,22 @@ class _HomeContentState extends State<HomeContent> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(decoration: BoxDecoration(color: Color.fromRGBO(255, 199, 44, 1.0)),),
-          Positioned(
-              top: 16.0,
-              left: 16.0,
-              child: ProfileButton(
-                userRepository: _userRepository,
-                isSignedIn: _isSignedIn,
-                user: _currentUser,
-              )
-          ),
-          Positioned(
-              top: 16.0,
-              right: 16.0,
-              child: FloatingButton()
+          PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _currentIndex = index);
+            },
+            children: <Widget>[
+              Container(color: Colors.blueGrey,),
+              donutWidget(),
+//              Container(color: Colors.red,),
+              Container(color: Colors.green,),
+              Container(color: Colors.blue,),
+            ],
           ),
         ],
       ),
+
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
