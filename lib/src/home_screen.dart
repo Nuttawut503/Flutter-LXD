@@ -124,15 +124,15 @@ class _HomeContentState extends State<HomeContent> {
               icon: Icon(Icons.home)
           ),
           BottomNavyBarItem(
-              title: Text('Item One'),
+              title: Text('Item two'),
               icon: Icon(Icons.apps)
           ),
           BottomNavyBarItem(
-              title: Text('Item One'),
-              icon: Icon(Icons.chat_bubble)
+              title: Text('testGoogleMap'),
+              icon: Icon(Icons.map)
           ),
           BottomNavyBarItem(
-              title: Text('Item One'),
+              title: Text('Item four'),
               icon: Icon(Icons.settings)
           ),
         ],
