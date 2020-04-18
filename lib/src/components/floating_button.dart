@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class FloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,10 @@ class FloatingButton extends StatelessWidget {
           _CustomButton(
             assetImage: 'images/navigate.png',
             label: 'Navigate',
-            onpressFunction: () => print('Navigate'),
+            onpressFunction: () => {
+              print('Navigate'),
+              openUrl.openMap(13.6515714,100.4944994)
+            },
           ),
         ],
       ),
@@ -86,5 +89,20 @@ class _CustomButton extends StatelessWidget {
         ],
       )
     );
+  }
+}
+
+class openUrl {
+
+  openUrl._();
+
+  static Future<void> openMap(double latitude, double longitude) async {
+    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      print("open map success");
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }
