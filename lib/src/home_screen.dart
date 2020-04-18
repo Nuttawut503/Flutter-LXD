@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:LXD/src/user_repository.dart';
 import 'package:LXD/src/components/profile_button.dart';
+import 'package:LXD/src/components/floating_button.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -18,11 +18,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeContent(
-        userRepository: _userRepository,
-        isSignedIn: _isSignedIn,
-        user: _currentUser,
-      )
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: HomeContent(
+          userRepository: _userRepository,
+          isSignedIn: _isSignedIn,
+          user: _currentUser,
+        ),
+      ),
     );
   }
 }
@@ -51,7 +54,7 @@ class _HomeContentState extends State<HomeContent> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(),
+        Container(decoration: BoxDecoration(color: Color.fromRGBO(255, 199, 44, 1.0)),),
         Positioned(
           top: 16.0,
           left: 16.0,
@@ -60,7 +63,12 @@ class _HomeContentState extends State<HomeContent> {
             isSignedIn: _isSignedIn,
             user: _currentUser,
           )
-        )
+        ),
+        Positioned(
+          top: 16.0,
+          right: 16.0,
+          child: FloatingButton()
+        ),
       ],
     );
   }

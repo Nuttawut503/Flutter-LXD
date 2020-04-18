@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:LXD/src/components/login/login.dart';
 import 'package:LXD/src/user_repository.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginDialog extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final UserRepository _userRepository;
 
-  LoginDialog({Key key, @required UserRepository userRepository})
+  LoginButton({Key key, @required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(key: key);
@@ -28,12 +29,9 @@ class _LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<_LoginForm> {
-  LoginBloc _loginBloc;
-
   @override
   void initState() {
     super.initState();
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   @override
@@ -41,30 +39,47 @@ class _LoginFormState extends State<_LoginForm> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.isFailure) {
-          Navigator.of(context).pop('isFailure');
-        }
-        if (state.isSuccess) {
-          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-          Navigator.of(context).pop('isSuccess');
-        }
-      },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    GoogleLoginButton(),
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Login Fail',
+                      style: GoogleFonts.openSans(color: Colors.white),
+                    ), 
+                    Icon(FontAwesomeIcons.timesCircle),
                   ],
                 ),
               ),
-            ],
-          );
+            );
         }
+        if (state.isSuccess) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green,
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Login Success',
+                      style: GoogleFonts.openSans(color: Colors.white),
+                    ), 
+                    Icon(FontAwesomeIcons.checkCircle),
+                  ],
+                ),
+              ),
+            );
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+        }
+      },
+      child: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) => GoogleLoginButton(),
       ),
     );
   }
@@ -88,7 +103,7 @@ class GoogleLoginButton extends StatelessWidget {
           LoginWithGooglePressed(),
         );
       },
-      label: Text('Sign in with Google', style: TextStyle(color: Colors.white)),
+      label: Text('Sign in', style: GoogleFonts.openSans(color: Colors.white)),
       color: Colors.redAccent,
     );
   }

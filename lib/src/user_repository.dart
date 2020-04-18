@@ -12,10 +12,7 @@ class UserRepository {
 
 
   Future<FirebaseUser> signInWithGoogle() async {
-    print('Haha');
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    print(googleUser);
-    print('Haha2');
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,

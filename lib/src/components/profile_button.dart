@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:LXD/src/user_repository.dart';
 import 'package:LXD/src/components/login/login.dart';
-import 'package:LXD/src/components/login/logout.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileButton extends StatefulWidget {
@@ -25,42 +25,6 @@ class _ProfileButtonState extends State<ProfileButton> {
   bool get _isSignedIn => widget._isSignedIn;
   Map get _currentUser => widget._currentUser;
 
-  void callLoginForm(BuildContext context) async {
-    String returnText = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: LoginDialog(userRepository: _userRepository),
-        );
-      }
-    );
-    if (returnText == 'isSuccess') {
-      Scaffold.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.green,
-            content: CustomSnac(
-              text: 'Login Success',
-              icon: FontAwesomeIcons.batteryFull
-            )
-          ),
-        );
-    } else if (returnText == 'isFailure') {
-      Scaffold.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: CustomSnac(
-              text: 'Login Fail',
-              icon: FontAwesomeIcons.crosshairs
-            )
-          ),
-        );
-    }
-  }
-
   void callLogoutForm(BuildContext context) async {
     String returnText = await showDialog(
       context: context,
@@ -75,11 +39,17 @@ class _ProfileButtonState extends State<ProfileButton> {
         ..hideCurrentSnackBar()
         ..showSnackBar(
           SnackBar(
-            backgroundColor: Colors.blueAccent,
-            content: CustomSnac(
-              text: 'Logout sucess',
-              icon: FontAwesomeIcons.smile
-            )
+            backgroundColor: Colors.black,
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Logout Succcess',
+                  style: GoogleFonts.openSans(color: Colors.white),
+                ), 
+                Icon(FontAwesomeIcons.signOutAlt),
+              ],
+            ),
           ),
         );
     }
@@ -87,33 +57,58 @@ class _ProfileButtonState extends State<ProfileButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      child: Text(_isSignedIn ? 'Click to log out': 'Click to log in'),
-      onPressed: () => _isSignedIn ? callLogoutForm(context): callLoginForm(context),
-    );
-  }
-}
-
-class CustomSnac extends StatelessWidget {
-  final String _text;
-  final IconData _icon;
-
-  CustomSnac({Key key, @required String text, @required IconData icon})
-      : _text = text,
-        _icon = icon,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          _text,
-          style: GoogleFonts.openSans(color: Colors.white),
-        ), 
-        Icon(_icon)
-      ],
-    );
+    if (_isSignedIn) {
+      return Container(
+        height: 75.0,
+        width: 75.0,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                color: Colors.black,
+              ),
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTapDown: (TapDownDetails details) { 
+                    callLogoutForm(context);
+                  },
+                  child: Container(
+                    width: 65.0,
+                    height: 65.0,
+                    child: CachedNetworkImage(
+                      imageUrl: '${_currentUser["profile_picture_url"]}',
+                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                        child: CircularProgressIndicator(value: downloadProgress.progress),
+                      ), 
+                      errorWidget: (context, url, error) => Center(
+                        child: Icon(FontAwesomeIcons.exclamationTriangle),
+                      ),
+                    ),
+                  ),
+                )                
+              ),
+            ),
+            Positioned(
+              bottom: 5.0,
+              right: 5.0,
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+                child: Center(
+                  child: Icon(FontAwesomeIcons.wrench, color: Colors.white, size: 12.0,),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }  
+    return LoginButton(userRepository: _userRepository);
   }
 }

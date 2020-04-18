@@ -14,6 +14,7 @@ dependencies:
   google_fonts: ^0.4.1
   font_awesome_flutter: ^8.8.1
   equatable: ^1.1.1
+  cached_network_image: ^2.1.0+1
 
   flutter:
     sdk: flutter
@@ -38,6 +39,4 @@ flutter:
   uses-material-design: true
   
   assets:
-    - images/booking.png
-    - images/navigate.png
-    - images/search.png
+    - images/
