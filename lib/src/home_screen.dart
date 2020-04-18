@@ -3,7 +3,7 @@ import 'package:LXD/src/user_repository.dart';
 import 'package:LXD/src/components/profile_button.dart';
 import 'package:LXD/src/components/floating_button.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-
+import 'package:LXD/src/components/render_gmap.dart' as render_gmap;
 
 class HomeScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -102,8 +102,10 @@ class _HomeContentState extends State<HomeContent> {
             children: <Widget>[
               Container(color: Colors.blueGrey,),
               donutWidget(),
+              render_gmap.goToMap.return_gmap(),
 //              Container(color: Colors.red,),
-              Container(color: Colors.green,),
+
+//              Container(color: Colors.green,),
               Container(color: Colors.blue,),
             ],
           ),
