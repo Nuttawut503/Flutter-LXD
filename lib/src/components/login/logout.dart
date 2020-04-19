@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
 
 class LogoutDialog extends StatelessWidget {
@@ -49,7 +48,7 @@ class LogoutButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(FontAwesomeIcons.frown, color: Colors.redAccent),
+          Icon(FontAwesomeIcons.signOutAlt, color: Colors.redAccent),
           SizedBox(width: 10.0,),
           Text(
             'Log out',

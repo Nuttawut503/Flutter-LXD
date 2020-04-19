@@ -1,15 +1,19 @@
 import 'dart:async';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class goToMap {
+class GoToMap extends StatelessWidget {
   static Completer<GoogleMapController> _controller = Completer();
 
-  static return_gmap(){
+  @override
+  Widget build(BuildContext context){
     double latitude=13.6515714, longitude=100.4944994;
-    return  Scaffold(
-        body: GoogleMap(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(title: Text('LearningExchange@KMUTT'),),
+      body: SafeArea(
+        child: GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
             target: LatLng(latitude,longitude),
@@ -17,21 +21,23 @@ class goToMap {
           ),
           markers: {
             Marker(
-                markerId: MarkerId("m1"),
-                position: LatLng(latitude,longitude),
-                infoWindow: InfoWindow(title: "LX", snippet: "Learning Exchange")),
-
+              markerId: MarkerId("m1"),
+              position: LatLng(latitude,longitude),
+              infoWindow: InfoWindow(title: "LX", snippet: "Learning Exchange")
+            ),
           },
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
         )
+      )
     );
-  }}
+  }
+}
 
-class openUrl {
+class OpenUrl {
 
-  openUrl._();
+  OpenUrl._();
 
   static Future<void> openMap(double latitude, double longitude) async {
     String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';

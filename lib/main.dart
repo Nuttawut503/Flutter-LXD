@@ -12,10 +12,14 @@ void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate(); // Debugging
   final UserRepository userRepository = UserRepository();
   runApp(
-    BlocProvider(
-      create: (context) => AuthenticationBloc(
-        userRepository: userRepository,
-      )..add(AppStarted()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (context) => 
+            AuthenticationBloc(userRepository: userRepository,)
+              ..add(AppStarted()),
+        )
+      ],
       child: App(userRepository: userRepository),
     ),
   );

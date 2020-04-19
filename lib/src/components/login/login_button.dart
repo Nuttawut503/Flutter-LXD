@@ -48,10 +48,10 @@ class _LoginFormState extends State<_LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Login Fail',
+                      'Can\'t access to Google',
                       style: GoogleFonts.openSans(color: Colors.white),
                     ), 
-                    Icon(FontAwesomeIcons.timesCircle),
+                    Icon(FontAwesomeIcons.frown),
                   ],
                 ),
               ),
@@ -103,7 +103,7 @@ class GoogleLoginButton extends StatelessWidget {
           LoginWithGooglePressed(),
         );
       },
-      label: Text('Sign in', style: GoogleFonts.openSans(color: Colors.white)),
+      label: Text('Sign in with Google', style: GoogleFonts.openSans(color: Colors.white)),
       color: Colors.redAccent,
     );
   }
