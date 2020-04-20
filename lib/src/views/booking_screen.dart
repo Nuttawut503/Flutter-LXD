@@ -38,7 +38,7 @@ class _BookingScreenState extends State<BookingScreen> {
         itemBuilder: (BuildContext context, int index) {
           return Card(
             child: ListTile(
-                onTap: () {}, title: Text('${entries[index]}')),
+                onTap: () {}, title: Text('${entries[index]}'), subtitle: Text('Hello'), isThreeLine: true  ,leading: Icon(Icons.ac_unit), trailing: Icon(Icons.linear_scale),),
           );
         });
   }
