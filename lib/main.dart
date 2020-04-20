@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
-import 'package:LXD/src/user_repository.dart';
-import 'package:LXD/src/home_screen.dart';
+import 'package:LXD/src/database/user_repository.dart';
+import 'package:LXD/src/views/home_screen.dart';
 import 'package:LXD/src/splash_screen.dart';
 import 'package:LXD/src/simple_bloc_delegate.dart';
 

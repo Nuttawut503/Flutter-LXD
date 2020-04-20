@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:LXD/src/user_repository.dart';
+import 'package:LXD/src/database/user_repository.dart';
 import 'package:LXD/src/components/login/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';

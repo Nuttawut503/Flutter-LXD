@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:LXD/src/components/login/login.dart';
-import 'package:LXD/src/user_repository.dart';
+import 'package:LXD/src/database/user_repository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   UserRepository _userRepository;

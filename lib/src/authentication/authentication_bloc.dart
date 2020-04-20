@@ -2,13 +2,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:LXD/src/user_repository.dart';
+import 'package:LXD/src/database/user_repository.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
 
   AuthenticationBloc({@required UserRepository userRepository})

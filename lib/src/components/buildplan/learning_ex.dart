@@ -40,7 +40,7 @@ class _MapContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (TapDownDetails details) {
+      onTapUp: (TapUpDetails details) {
         final RenderBox box = context.findRenderObject();
         final Offset localOffset = box.globalToLocal(details.globalPosition);
         final Offset percentOffset = Offset(localOffset.dx / box.size.width * 100, localOffset.dy / box.size.height * 100);

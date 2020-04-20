@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:LXD/src/components/login/login.dart';
-import 'package:LXD/src/user_repository.dart';
+import 'package:LXD/src/database/user_repository.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
