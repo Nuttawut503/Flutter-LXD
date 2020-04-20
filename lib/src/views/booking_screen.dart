@@ -22,6 +22,7 @@ class _BookingScreenState extends State<BookingScreen> {
     super.dispose();
   }
 
+  final List<String> rooms = <String>['A', 'B', 'C', 'D', 'E', 'F'];
   final List<String> entries = <String>[
     'This is event: 1',
     'This is event: 2',
@@ -61,7 +62,7 @@ class _BookingScreenState extends State<BookingScreen> {
           },
           children: <Widget>[
             Container(
-                color: Colors.blueGrey,
+                color: Colors.cyan[100],
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 4.0),
@@ -75,26 +76,24 @@ class _BookingScreenState extends State<BookingScreen> {
                       }),
                 )),
             Container(
-              color: Colors.pinkAccent,
+              color: Colors.pinkAccent[100],
               child: Column(
                 children: <Widget>[
                   SizedBox(
                     height: 40,
                   ),
                   Container(
-                      width: 375,
-                      height: 275,
-                      decoration: BoxDecoration(
+                    width: 375,
+                    height: 275,
+                    decoration: BoxDecoration(
                         color: Colors.white,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25.0),
-                              bottomRight: Radius.circular(25.0)),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            bottomRight: Radius.circular(25.0)),
                         image: DecorationImage(
-                          image: AssetImage("images/LX_FirstFloorPlan.png"),
-                          fit: BoxFit.cover
-                        )
-                      ),
+                            image: AssetImage("images/LX_FirstFloorPlan.png"),
+                            fit: BoxFit.cover)),
                   ),
                 ],
               ),
@@ -114,7 +113,8 @@ class _BookingScreenState extends State<BookingScreen> {
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
               title: Text('View Events'), icon: Icon(Icons.find_in_page)),
-          BottomNavyBarItem(title: Text('Find a room'), icon: Icon(Icons.apps)),
+          BottomNavyBarItem(
+              title: Text('Find a room'), icon: Icon(Icons.apps)),
           BottomNavyBarItem(
               title: Text('Book!'), icon: Icon(Icons.library_books)),
         ],
