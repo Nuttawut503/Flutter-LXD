@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:LXD/src/views/render_gmap.dart' as Render_gmap;
+import 'package:LXD/src/views/booking_screen.dart';
 
 class FloatingButton extends StatefulWidget {
   final UserRepository _userRepository;
@@ -92,7 +93,7 @@ class _ButtonList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> buttonList = [
       EventButton(),
-      SizedBox(height: 10.0,),
+      SizedBox(height: 5.0,),
       MapButton(),
     ];
     if (_isSignedIn) {
@@ -102,6 +103,7 @@ class _ButtonList extends StatelessWidget {
           SizedBox(height: 10.0,),
         ])
         ..insertAll(0, [
+          SizedBox(height: 10.0,),
           GestureDetector(
             onTap: () { callLogoutForm(context); },
             child: Container(
@@ -118,16 +120,16 @@ class _ButtonList extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15.0,),
+          SizedBox(height: 10.0,),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0,),
+            padding: EdgeInsets.symmetric(horizontal: 25.0,),
             decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2.0, color: Color.fromRGBO(127, 127, 127, 0.7)))),
           ),
-          SizedBox(height: 10.0,),
+          SizedBox(height: 5.0,),
         ]);
     }
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -135,7 +137,7 @@ class _ButtonList extends StatelessWidget {
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.5),
             blurRadius: 10.0,
-            spreadRadius: 1.0,
+            spreadRadius: 0.5,
             offset: Offset(0, 0),
           )
         ],
@@ -162,7 +164,9 @@ class BookingButton extends StatelessWidget {
   Widget build(BuildContext context) => _CustomButton(
     assetImage: 'images/booking.png',
     label: 'Booking',
-    onpressFunction: () => print('booking'),
+    onpressFunction: () {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => BookingScreen()));
+    },
   );
 }
 
@@ -190,34 +194,39 @@ class _CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _onpressFunction();
-      },
-      child: Container(
-        child: Wrap(
-          direction: Axis.vertical,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 40.0,
-              height: 40.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(_assetImage),
-                  fit: BoxFit.contain
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          _onpressFunction();
+        },
+        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          child: Wrap(
+            direction: Axis.vertical,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: <Widget>[
+              Container(
+                width: 40.0,
+                height: 40.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(_assetImage),
+                    fit: BoxFit.contain
+                  ),
                 ),
               ),
-            ),
-            Text(
-              '$_label',
-              style: GoogleFonts.openSans(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                height: 1.5,
+              Text(
+                '$_label',
+                style: GoogleFonts.openSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  height: 1.5,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

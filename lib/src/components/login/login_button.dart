@@ -78,9 +78,7 @@ class _LoginFormState extends State<_LoginForm> {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) => GoogleLoginButton(),
-      ),
+      child: GoogleLoginButton(),
     );
   }
 
@@ -94,6 +92,7 @@ class GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton.icon(
+      elevation: 16,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
       ),
@@ -104,7 +103,7 @@ class GoogleLoginButton extends StatelessWidget {
         );
       },
       label: Text('Sign in with Google', style: GoogleFonts.openSans(color: Colors.white)),
-      color: Colors.redAccent,
+      color: Colors.red,
     );
   }
 }

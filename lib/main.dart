@@ -15,10 +15,10 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(
-          create: (context) => 
-            AuthenticationBloc(userRepository: userRepository,)
-              ..add(AppStarted()),
-        )
+          create: (context) => AuthenticationBloc(
+            userRepository: userRepository,
+          )..add(AppStarted()),
+        ),
       ],
       child: App(userRepository: userRepository),
     ),
