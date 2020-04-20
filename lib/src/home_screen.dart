@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:LXD/src/user_repository.dart';
 import 'package:LXD/src/components/floating_button.dart';
+import 'package:LXD/src/components/buildplan/buildplan.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -54,6 +55,7 @@ class _HomeContentState extends State<HomeContent> {
     return Stack(
       children: <Widget>[
         Container(decoration: BoxDecoration(color: Color.fromRGBO(255, 199, 44, 1.0)),),
+        LearningExchange(),
         Positioned(
           top: 16.0,
           right: 16.0,
