@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class BookingScreen extends StatefulWidget {
   State<BookingScreen> createState() => _BookingScreenState();
@@ -31,7 +32,16 @@ class _BookingScreenState extends State<BookingScreen> {
     'This is event: 5',
   ];
   final List<int> colorCodes = <int>[600, 500, 100];
-
+  Widget test(){
+    return ListView.builder(
+        itemCount: entries.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            child: ListTile(
+                onTap: () {}, title: Text('${entries[index]}'), subtitle: Text('Hello'), isThreeLine: true  ,leading: Icon(Icons.ac_unit), trailing: Icon(Icons.linear_scale),),
+          );
+        });
+  }
   Widget roundedBoxes() {
     return Container(
         width: 325,
@@ -48,6 +58,7 @@ class _BookingScreenState extends State<BookingScreen> {
         ));
   }
 
+  CarouselController buttonCarouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,19 +73,9 @@ class _BookingScreenState extends State<BookingScreen> {
           },
           children: <Widget>[
             Container(
-                color: Colors.cyan[100],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 4.0),
-                  child: ListView.builder(
-                      itemCount: entries.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: ListTile(
-                              onTap: () {}, title: Text('${entries[index]}')),
-                        );
-                      }),
-                )),
+              color: Colors.cyan[100],
+            child: test(),
+                 ),
             Container(
               color: Colors.pinkAccent[100],
               child: Column(
@@ -96,6 +97,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             fit: BoxFit.cover)),
                   ),
                 ],
+
               ),
             ),
             Container(
