@@ -17,6 +17,7 @@ class EventRepository {
   }
 
   Future<List<Map>> getTodaysEvent() async {
-    return [];
+    List result = [];
+    return result;
   }
 }
