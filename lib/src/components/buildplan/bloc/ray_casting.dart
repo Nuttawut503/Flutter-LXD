@@ -4,28 +4,43 @@ import 'dart:math';
 class Building {
   static final Map<String, List<Offset>> rooms = {
     'Room A': [
-      Offset(0, 0),
-      Offset(50, 0),
-      Offset(50, 50),
-      Offset(0, 50),
+      Offset(23, 16),
+      Offset(30, 16),
+      Offset(30, 24),
+      Offset(23, 24),
     ],
     'Room B': [
-      Offset(50, 0),
-      Offset(100, 0),
-      Offset(100, 50),
-      Offset(50, 50),
+      Offset(15, 28),
+      Offset(30.5, 28),
+      Offset(30.5, 41),
+      Offset(15, 41),
     ],
     'Room C': [
-      Offset(0, 50),
-      Offset(50, 50),
-      Offset(50, 100),
-      Offset(0, 100),
+      Offset(27.5, 52),
+      Offset(35.5, 52),
+      Offset(35.5, 68),
+      Offset(27.5, 68),
     ],
     'Room D': [
-      Offset(50, 50),
-      Offset(100, 50),
-      Offset(100, 100),
-      Offset(50, 100),
+      Offset(38, 55),
+      Offset(47, 55),
+      Offset(47, 78),
+      Offset(38, 78),
+    ],
+    'Room E': [
+      Offset(60, 49),
+      Offset(73, 49),
+      Offset(73, 60),
+      Offset(60, 64),
+    ],
+    'Room F': [
+      Offset(55, 17.5),
+      Offset(84.5, 17.5),
+      Offset(83, 24),
+      Offset(81, 29),
+      Offset(76, 39),
+      Offset(76, 40.5),
+      Offset(55, 40.5),
     ]
   };
 

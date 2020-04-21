@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:LXD/src/database/user_repository.dart';
+import 'package:LXD/src/api/user_repository.dart';
 import 'package:LXD/src/components/login/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -107,8 +107,8 @@ class _ButtonList extends StatelessWidget {
           GestureDetector(
             onTap: () { callLogoutForm(context); },
             child: Container(
-              width: 40.0,
-              height: 40.0,
+              width: 46.0,
+              height: 46.0,
               child: CachedNetworkImage(
                 imageUrl: '${_currentUser["profile_picture_url"]}',
                 progressIndicatorBuilder: (context, url, downloadProgress) => Center(

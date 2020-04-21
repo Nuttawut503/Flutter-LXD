@@ -23,16 +23,17 @@ class BuildplanBloc extends Bloc<BuildplanEvent, BuildplanState> {
 
   Stream<BuildplanState> _mapBuildingPlanTouchedToState(Offset offset) async* {
     String roomName = Building.getRoomName(offset);
-    yield BuildplanState.roomDetail(
+    yield BuildplanState.roomEventDetail(
       roomName: roomName,
+      roomDetail: 'ugwemubwem ossas',
       points: (roomName == null)?[]: Building.rooms['$roomName'],
       eventDetail: (roomName == null)?{}: {
-        'ownerid': 'AIzaS2wXlOKxP2',
+        'reserver_id': 'AIzaS2wXlOKxP2',
         'title': 'XXXXXX',
         'detail': 'asdvxcvwdfsazcxcsfqasd',
-        'datetime': DateFormat.yMMMMd('en_US').format(DateTime.now()),
-        'starttime': DateFormat.Hm().format(DateTime.now()),
-        'endtime': DateFormat.Hm().format(DateTime.now()),
+        'date': DateFormat.yMMMMd('en_US').format(DateTime.now()),
+        'start_time': DateFormat.Hm().format(DateTime.now()),
+        'end_time': DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch + (1 << 20))),
       }
     );
   }

@@ -20,7 +20,7 @@ class LogoutDialog extends StatelessWidget {
           width: 250.0,
           height: 200.0,
           child: Image.asset(
-            'images/login-bg.jpg',
+            'images/LX_FirstFloorPlan.png',
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),
