@@ -34,7 +34,7 @@ class _HeaderGoogleMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+      padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Color.fromRGBO(208, 219, 217, 1.0),
       ),

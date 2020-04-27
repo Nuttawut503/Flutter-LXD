@@ -33,7 +33,7 @@ class _HeaderSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+      padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Color.fromRGBO(208, 219, 217, 1.0),
       ),
@@ -74,8 +74,8 @@ class _ContentSetting extends StatelessWidget {
     bool result = (await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Are you sure?'),
-        content: Text('Do you want to sign out'),
+        title: Text('Are you sure?', style: GoogleFonts.openSans()),
+        content: Text('Do you want to sign out', style: GoogleFonts.openSans()),
         actions: <Widget>[
           FlatButton(
             onPressed: () => Navigator.of(context).pop(false),
