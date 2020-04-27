@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class RuleScreen extends StatelessWidget {
   @override
@@ -69,6 +70,9 @@ class _HeaderRule extends StatelessWidget {
 }
 
 class _ContentRule extends StatelessWidget {
+  PageController _controller = PageController(
+    initialPage: 0,
+  );
   @override
   Widget build(BuildContext context) => BlocBuilder<AuthenticationBloc, AuthenticationState>(
     builder: (context, state) => (state is Authenticated)
@@ -79,10 +83,39 @@ class _ContentRule extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color.fromRGBO(208, 219, 217, 1.0),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: PageView(
+          controller: _controller,
           children: [
-            // ... add some content here!!
+            Container(
+              child: Column(
+//                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                      height: 200.0,
+                      width: 350.0,
+                      child: Carousel(
+                        images: [
+                          Image.asset('images/logo_app.png'),
+                          Image.network('https://cdn.myanimelist.net/s/common/uploaded_files/1452233251-a47793a705e917c1754afd47cda99d9f.jpeg'),
+                        ],
+                        dotSize: 4.0,
+                        dotSpacing: 15.0,
+                        dotColor: Colors.lightGreenAccent,
+                        indicatorBgPadding: 5.0,
+                        dotBgColor: Colors.purple.withOpacity(0.5),
+                        borderRadius: true,
+                      )
+                  ),
+
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.cyan,
+            ),
+            Container(
+              color: Colors.deepPurpleAccent,
+            ),
           ],
         ),
       ),
