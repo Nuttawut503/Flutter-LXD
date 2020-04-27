@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:LXD/src/components/login/login.dart';
+import 'package:LXD/src/controllers/login/bloc.dart';
 import 'package:LXD/src/api/user_repository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -24,6 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _mapLoginWithGooglePressedToState() async* {
     try {
+      yield LoginState.submit();
       await _userRepository.signInWithGoogle();
       yield LoginState.success();
     } catch (_) {

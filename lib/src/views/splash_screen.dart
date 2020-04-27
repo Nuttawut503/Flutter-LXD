@@ -5,9 +5,22 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Center(
-          child: Text('Loading...', style: GoogleFonts.openSans(fontSize: 48.0),),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Please wait a second...',
+                style: GoogleFonts.openSans(color: Colors.white,),
+              ),
+              Text(
+                'We\'re checking your authentication',
+                style: GoogleFonts.openSans(color: Colors.white,),
+              )
+            ],
+          ),
         ),
       ),
     );

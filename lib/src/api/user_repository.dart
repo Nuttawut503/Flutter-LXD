@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final CollectionReference _userCollection;
 
-  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin, CollectionReference userCollection})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignin ?? GoogleSignIn();
+        _googleSignIn = googleSignin ?? GoogleSignIn(),
+        _userCollection = userCollection ?? Firestore.instance.collection('users');
 
   Future<FirebaseUser> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -18,6 +21,7 @@ class UserRepository {
       idToken: googleAuth.idToken,
     );
     await _firebaseAuth.signInWithCredential(credential);
+    await _updateUserActivation(await getUser());
     return _firebaseAuth.currentUser();
   }
 
@@ -26,6 +30,30 @@ class UserRepository {
       email: email,
       password: password,
     );
+  }
+
+  Future<void> _updateUserActivation(user) async {
+    final userSnapshot = await _userCollection.document('${user['id']}').get();
+    if (userSnapshot.exists) {
+      await _userCollection
+        .document('${user['id']}')
+        .updateData({
+          'name': user['name'],
+          'profile_image_url': user['profile_picture_url'],
+          'latest_signin': DateTime.now()
+        });
+    } else {
+      await _userCollection
+        .document('${user['id']}')
+        .setData({
+          'email': user['email'],
+          'name': user['name'],
+          'profile_image_url': user['profile_picture_url'],
+          'signup_date': DateTime.now(),
+          'latest_signin': DateTime.now(),
+          'is_admin': false
+        });
+    }
   }
 
   Future<void> signOut() async {

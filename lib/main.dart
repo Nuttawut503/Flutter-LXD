@@ -6,10 +6,11 @@ import 'package:LXD/src/api/user_repository.dart';
 import 'package:LXD/src/views/home_screen.dart';
 import 'package:LXD/src/views/splash_screen.dart';
 import 'package:LXD/simple_bloc_delegate.dart';
+import 'package:LXD/src/views/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocSupervisor.delegate = SimpleBlocDelegate(); // Debugging
+  BlocSupervisor.delegate = SimpleBlocDelegate(); // Debugging will be remove later.
   final UserRepository userRepository = UserRepository();
   runApp(
     MultiBlocProvider(
@@ -20,41 +21,33 @@ void main() {
           )..add(AppStarted()),
         ),
       ],
-      child: App(userRepository: userRepository),
+      child: MyApp(userRepository: userRepository),
     ),
   );
 }
 
-class App extends StatelessWidget {
+class MyApp extends StatelessWidget {
   final UserRepository _userRepository;
 
-  App({Key key, @required UserRepository userRepository})
+  MyApp({Key key, @required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage('images/login-bg.jpg'), context);
     return MaterialApp(
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is Unauthenticated) {
-            return HomeScreen(
+            return LoginScreen(
               userRepository: _userRepository,
-              isSignedIn: false,
             );
           }
           if (state is Authenticated) {
             return HomeScreen(
               userRepository: _userRepository,
-              isSignedIn: true,
-              user: {
-                'id': state.currentUser['id'],
-                'name': state.currentUser['name'],
-                'email': state.currentUser['email'],
-                'profile_picture_url': state.currentUser['profile_picture_url']
-              }
+              currentUser: state.currentUser,
             );
           }
           return SplashScreen();
