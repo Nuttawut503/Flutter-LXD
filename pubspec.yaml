@@ -33,6 +33,7 @@ dependencies:
   url_launcher: ^5.4.0
   google_maps_flutter: ^0.5.20
   carousel_pro: ^1.0.0
+  bottom_navy_bar: ^5.4.0
 
 dev_dependencies:
   flutter_test:

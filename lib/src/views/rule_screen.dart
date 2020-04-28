@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class RuleScreen extends StatelessWidget {
   @override
@@ -102,11 +103,28 @@ class _ContentRule extends StatelessWidget {
                         dotSpacing: 15.0,
                         dotColor: Colors.lightGreenAccent,
                         indicatorBgPadding: 5.0,
-                        dotBgColor: Colors.purple.withOpacity(0.5),
+                        dotBgColor: Colors.pinkAccent.withOpacity(0.5),
                         borderRadius: true,
                       )
                   ),
-
+                  SizedBox(height: 25,),
+                  Text('General Regulations', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
+                  SizedBox(height: 15,),
+                  InkWell(
+                    onTap: () => _popupDialog(context),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(Icons.assignment, size: 55,),
+                        title: Text('Credit Assesments'),
+                        subtitle: Text(
+                            'Wonder how much credits you should be taking?'
+                        ),
+                        isThreeLine: true,
+                        trailing: Icon(Icons.more_vert),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15,),
                 ],
               ),
             ),
@@ -128,4 +146,20 @@ class _ContentRule extends StatelessWidget {
       ),
     )
   );
+
+  void _popupDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Alert Dialog Example !!!'),
+            content: Text('Alert Dialog Body Goes Here  ..'),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close')),
+            ],
+          );
+        });
+  }
 }
