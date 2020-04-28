@@ -49,7 +49,7 @@ class RoomRepository {
                           .getDocuments()).documents;
     int l = 0, r = allEvents.length - 1;
     int mEvent;
-    while (l < r) {
+    while (l <= r) {
       int m = ((l + r) ~/ 2);
       DateTime mEventDate = DateTime.fromMillisecondsSinceEpoch(allEvents[m].data['schedule']['start_time'].seconds * 1000);
       if (selectedDate.year == mEventDate.year && selectedDate.month == mEventDate.month && selectedDate.day == mEventDate.day) {
@@ -82,8 +82,11 @@ class RoomRepository {
   }
 
   bool overlapped(DateTime s1, DateTime e1, DateTime s2, DateTime e2) {
+    print('[$s1 $e1] [$s2 $e2]');
     if (s1.isBefore(e2) && !s1.isBefore(s2)) return true;
-    if (e1.isAfter(s1) && !e1.isAfter(e1)) return true;
+    print('1) [$s1 $e1] [$s2 $e2]');
+    if (e1.isAfter(s2) && !e1.isAfter(e2)) return true;
+    print('2) [$s1 $e1] [$s2 $e2]');
     if (!s1.isAfter(s2) && !e1.isBefore(e2)) return true;
     return false;
   }
