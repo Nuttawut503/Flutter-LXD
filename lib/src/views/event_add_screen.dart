@@ -323,13 +323,14 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                   ),
                   SizedBox(width: 12.0,),
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: (state.tags.length < 5) 
+                    ? () {
                       String tagName = _tagFieldController.text.trim().replaceAll(RegExp(' +'), ' '); 
                       if (tagName.isNotEmpty) {
                         BlocProvider.of<BookingBloc>(context).add(TagAdded(tagName: tagName));
                       }
                       _tagFieldController.clear();
-                    },
+                    }: null,
                     child: Text('ADD', style: GoogleFonts.openSans()),
                   )
                 ]

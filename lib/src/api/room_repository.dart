@@ -82,11 +82,8 @@ class RoomRepository {
   }
 
   bool overlapped(DateTime s1, DateTime e1, DateTime s2, DateTime e2) {
-    print('[$s1 $e1] [$s2 $e2]');
     if (s1.isBefore(e2) && !s1.isBefore(s2)) return true;
-    print('1) [$s1 $e1] [$s2 $e2]');
     if (e1.isAfter(s2) && !e1.isAfter(e2)) return true;
-    print('2) [$s1 $e1] [$s2 $e2]');
     if (!s1.isAfter(s2) && !e1.isBefore(e2)) return true;
     return false;
   }
