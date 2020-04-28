@@ -42,16 +42,49 @@ class RoomRepository {
   Future<bool> isTimeOverlapped({int roomId, DateTime selectedDate, DateTime startTime, DateTime endTime}) async {
     final DateTime sTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, startTime.hour, startTime.minute, 0, 0, 0);
     final DateTime eTime = DateTime(selectedDate.year, selectedDate.month, selectedDate.day, endTime.hour, endTime.minute, 0, 0, 0);
-    final bool isStuck1 = ((await roomCollection
+    // print(DateTime.fromMillisecondsSinceEpoch(element.data['schedule']['start_time'].seconds * 1000));
+    final List allEvents = (await eventCollection
                           .where('room_id', isEqualTo: roomId.toString())
-                          .where('schedule.startTime', isGreaterThan: sTime)
-                          .where('schedule.startTime', isLessThan: eTime)
-                          .getDocuments()).documents.length != 0);
-    final bool isStuck2 = ((await roomCollection
-                          .where('room_id', isEqualTo: roomId.toString())
-                          .where('schedule.endTime', isGreaterThan: sTime)
-                          .where('schedule.endTime', isLessThan: eTime)
-                          .getDocuments()).documents.length != 0);
-    return (isStuck1 && isStuck2);
+                          .orderBy('schedule.start_time')
+                          .getDocuments()).documents;
+    int l = 0, r = allEvents.length - 1;
+    int mEvent;
+    while (l < r) {
+      int m = ((l + r) ~/ 2);
+      DateTime mEventDate = DateTime.fromMillisecondsSinceEpoch(allEvents[m].data['schedule']['start_time'].seconds * 1000);
+      if (selectedDate.year == mEventDate.year && selectedDate.month == mEventDate.month && selectedDate.day == mEventDate.day) {
+        mEvent = m;
+        break;
+      } else if (selectedDate.isBefore(mEventDate)) {
+        r = m - 1;
+      } else {
+        l = m + 1;
+      }
+    }
+    if (mEvent == null) return false;
+    l = mEvent;
+    r = mEvent + 1;
+    while (l >= 0) {
+      DateTime eventSTime = DateTime.fromMillisecondsSinceEpoch(allEvents[l].data['schedule']['start_time'].seconds * 1000);
+      if (eventSTime.year != sTime.year || eventSTime.month != sTime.month || eventSTime.day != sTime.day) break;
+      DateTime eventETime = DateTime.fromMillisecondsSinceEpoch(allEvents[l].data['schedule']['end_time'].seconds * 1000);
+      if (overlapped(sTime, eTime, eventSTime, eventETime)) return true;
+      --l;
+    }
+    while (r < allEvents.length) {
+      DateTime eventSTime = DateTime.fromMillisecondsSinceEpoch(allEvents[r].data['schedule']['start_time'].seconds * 1000);
+      if (eventSTime.year != sTime.year || eventSTime.month != sTime.month || eventSTime.day != sTime.day) break;
+      DateTime eventETime = DateTime.fromMillisecondsSinceEpoch(allEvents[r].data['schedule']['end_time'].seconds * 1000);
+      if (overlapped(sTime, eTime, eventSTime, eventETime)) return true;
+      ++r;
+    }
+    return false;
+  }
+
+  bool overlapped(DateTime s1, DateTime e1, DateTime s2, DateTime e2) {
+    if (s1.isBefore(e2) && !s1.isBefore(s2)) return true;
+    if (e1.isAfter(s1) && !e1.isAfter(e1)) return true;
+    if (!s1.isAfter(s2) && !e1.isBefore(e2)) return true;
+    return false;
   }
 }

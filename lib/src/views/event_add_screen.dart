@@ -94,10 +94,22 @@ class _SectionEventAdd extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: Color.fromRGBO(208, 219, 217, 1.0)),
       child: BlocListener<BookingBloc, BookingState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state.isSuccess) {
-            print('successed');
-            // Navigator.of(context).pop();
+            await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Completed!!', style: GoogleFonts.openSans()),
+                content: Text('Your form is submitted', style: GoogleFonts.openSans()),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            Navigator.of(context).pop();
           }
         },
         child: BlocBuilder<BookingBloc, BookingState>(
@@ -156,11 +168,13 @@ class _FormFirstPage extends StatefulWidget {
 
 class _FormFirstPageState extends State<_FormFirstPage> {
   PageController get _pageFormController => widget._pageFormController;
+  TextEditingController _detailFieldController = TextEditingController();
   Timer _debounce;
 
   @override
   void dispose() {
     if (_debounce?.isActive ?? false) _debounce.cancel();
+    _detailFieldController.dispose();
     super.dispose();
   }
   
@@ -181,7 +195,7 @@ class _FormFirstPageState extends State<_FormFirstPage> {
             onChanged: (text) {
               if (_debounce?.isActive ?? false) _debounce.cancel();
               _debounce = Timer(Duration(milliseconds: 900), () {
-                print(text);
+                BlocProvider.of<BookingBloc>(context).add(TitleUpdated(title: text));
               });
             },
             style: GoogleFonts.openSans(fontSize: 19.0),
@@ -206,12 +220,7 @@ class _FormFirstPageState extends State<_FormFirstPage> {
             maxLength: 150,
             keyboardType: TextInputType.multiline,
             maxLines: 3,
-            onChanged: (text) {
-              if (_debounce?.isActive ?? false) _debounce.cancel();
-              _debounce = Timer(Duration(milliseconds: 900), () {
-                print(text);
-              });
-            },
+            controller: _detailFieldController,
             style: GoogleFonts.openSans(),
             decoration: InputDecoration(
               hintText: 'Information of your event',
@@ -231,14 +240,20 @@ class _FormFirstPageState extends State<_FormFirstPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              RaisedButton(
-                onPressed: () {
-                  _pageFormController.nextPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.ease,
+              BlocBuilder<BookingBloc, BookingState>(
+                builder: (context, state) {
+                  return RaisedButton(
+                    onPressed: state.title.isNotEmpty
+                    ? () {
+                      BlocProvider.of<BookingBloc>(context).add(DetailUpdated(detail: _detailFieldController.text));
+                      _pageFormController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.ease,
+                      );
+                    }: null,
+                    child: Text('Next', style: GoogleFonts.openSans()),
                   );
                 },
-                child: Text('Next', style: GoogleFonts.openSans()),
               ),
             ],
           )
@@ -273,74 +288,82 @@ class _FormSecondPageState extends State<_FormSecondPage> {
     return Container(
       width: min(max(300, MediaQuery.of(context).size.width * 0.75), 800),
       alignment: Alignment(0, -0.2),
-      child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(bottom: 16.0),
-        children: [
-          Text('Tags (Optional: up to 5)', style: GoogleFonts.openSans(fontSize: 24.0, fontWeight: FontWeight.w600), textAlign: TextAlign.left,),
-          Text('Use this to grab attention', style: GoogleFonts.openSans(fontWeight: FontWeight.w300), textAlign: TextAlign.left,),
-          SizedBox(height: 24.0,),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: BlocBuilder<BookingBloc, BookingState>(
+        builder: (context, state) {
+          return ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(bottom: 16.0),
             children: [
-              Expanded(
-                child: TextFormField(
-                  maxLength: 15,
-                  keyboardType: TextInputType.text,
-                  controller: _tagFieldController,
-                  style: GoogleFonts.openSans(fontSize: 19.0),
-                  decoration: InputDecoration(
-                    hintText: 'Type here',
-                    hintStyle: GoogleFonts.openSans(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(19),
-                      borderSide: BorderSide(
-                        width: 0, 
-                        style: BorderStyle.none,
+              Text('Tags (Optional: up to 5)', style: GoogleFonts.openSans(fontSize: 24.0, fontWeight: FontWeight.w600), textAlign: TextAlign.left,),
+              Text('Use this to grab attention', style: GoogleFonts.openSans(fontWeight: FontWeight.w300), textAlign: TextAlign.left,),
+              SizedBox(height: 24.0,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      maxLength: 15,
+                      keyboardType: TextInputType.text,
+                      controller: _tagFieldController,
+                      style: GoogleFonts.openSans(fontSize: 19.0),
+                      decoration: InputDecoration(
+                        hintText: 'Type here',
+                        hintStyle: GoogleFonts.openSans(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(19),
+                          borderSide: BorderSide(
+                            width: 0, 
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                        filled: true,
+                        contentPadding: EdgeInsets.all(16),
                       ),
                     ),
-                    filled: true,
-                    contentPadding: EdgeInsets.all(16),
                   ),
-                ),
+                  SizedBox(width: 12.0,),
+                  RaisedButton(
+                    onPressed: () {
+                      String tagName = _tagFieldController.text.trim().replaceAll(RegExp(' +'), ' '); 
+                      if (tagName.isNotEmpty) {
+                        BlocProvider.of<BookingBloc>(context).add(TagAdded(tagName: tagName));
+                      }
+                      _tagFieldController.clear();
+                    },
+                    child: Text('ADD', style: GoogleFonts.openSans()),
+                  )
+                ]
               ),
-              SizedBox(width: 12.0,),
-              RaisedButton(
-                onPressed: () {
-                  print(_tagFieldController.text);
-                },
-                child: Text('ADD', style: GoogleFonts.openSans()),
+              SizedBox(height: 16.0,),
+              for (int i = 0; i < 5; ++i)
+                  _TagItem(index: i, value: (i < state.tags.length)? '${state.tags[i]}': '', shouldActivate: i < state.tags.length),
+              SizedBox(height: 16.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RaisedButton(
+                    onPressed: () {
+                      _pageFormController.previousPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.ease,
+                      );
+                    },
+                    child: Text('Prev', style: GoogleFonts.openSans()),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _pageFormController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.ease,
+                      );
+                    },
+                    child: Text('Next', style: GoogleFonts.openSans()),
+                  ),
+                ],
               )
-            ]
-          ),
-          SizedBox(height: 16.0,),
-          for (int i = 0; i < 5; ++i)
-              _TagItem(index: i, value: 'test', shouldActivate: i < 5),
-          SizedBox(height: 16.0,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RaisedButton(
-                onPressed: () {
-                  _pageFormController.previousPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.ease,
-                  );
-                },
-                child: Text('Prev', style: GoogleFonts.openSans()),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  _pageFormController.nextPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.ease,
-                  );
-                },
-                child: Text('Next', style: GoogleFonts.openSans()),
-              ),
             ],
-          )
-        ],
+          );
+        },
       ),
     );
   }
@@ -356,11 +379,12 @@ class _TagItem extends StatelessWidget {
         _value = value,
         _shoudActivate = shouldActivate;
 
-  void _deleteTagDialog(context, itemIndex) async {
+  void _deleteTagDialog(context) async {
     bool result = (await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Do you want to remove this tag?', style: GoogleFonts.openSans()),
+        content: Text('$_value', style: GoogleFonts.openSans()),
         actions: <Widget>[
           FlatButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -374,7 +398,7 @@ class _TagItem extends StatelessWidget {
       ),
     )) ?? false;
     if (result) {
-      print(itemIndex);
+      BlocProvider.of<BookingBloc>(context).add(TagRemoved(index: _index));
     }
   }
 
@@ -392,7 +416,7 @@ class _TagItem extends StatelessWidget {
             GestureDetector(
               onTap: _shoudActivate
               ? () {
-                _deleteTagDialog(context, _index);
+                _deleteTagDialog(context);
               }: null,
               child: Icon(FontAwesomeIcons.trashAlt, color: Colors.redAccent,),
             )
@@ -440,7 +464,10 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                 height: 200.0,
                 child: PageView(
                   onPageChanged: (index) {
-                    print(index);
+                    if (_debounce?.isActive ?? false) _debounce.cancel();
+                    _debounce = Timer(Duration(milliseconds: 500), () {
+                      BlocProvider.of<BookingBloc>(context).add(RoomDateUpdated(roomId: index));
+                    });
                   },
                   children: [
                     for (Map room in state.roomList)
@@ -450,10 +477,10 @@ class _FormThirdPageState extends State<_FormThirdPage> {
               ),
               Text('Swipe image to change the selected room', style: GoogleFonts.openSans(fontSize: 14.0)),
               SizedBox(height: 16.0,),
-              Text('Selected room: ', style: GoogleFonts.openSans(fontSize: 17.0)),
-              Text('Selected date: ${DateFormat.yMMMMd().format(DateTime.now())}', style: GoogleFonts.openSans(fontSize: 17.0)),
-              Text('\t- Start time: ${DateFormat.Hm().format(DateTime.now())}', style: GoogleFonts.openSans(fontSize: 17.0)),
-              Text('\t- End time: ${DateFormat.Hm().format(DateTime.now())}', style: GoogleFonts.openSans(fontSize: 17.0)),
+              Text('Selected room: ${state.roomList[state.roomId]['name']}', style: GoogleFonts.openSans(fontSize: 17.0)),
+              Text('Selected date: ${state.selectedDate == null? '': DateFormat.yMMMMd().format(state.selectedDate)}', style: GoogleFonts.openSans(fontSize: 17.0)),
+              Text('\t- Start time: ${state.startTime == null? '': DateFormat.Hm().format(state.startTime)}', style: GoogleFonts.openSans(fontSize: 17.0)),
+              Text('\t- End time: ${state.endTime == null? '': DateFormat.Hm().format(state.endTime)}', style: GoogleFonts.openSans(fontSize: 17.0)),
               SizedBox(height: 8.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -462,7 +489,9 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                     child: GestureDetector(
                       onTap: () async {
                         _selectedDate = await _getSelectedDate();
-                        print(_selectedDate);
+                        if (_selectedDate != null) {
+                          BlocProvider.of<BookingBloc>(context).add(RoomDateUpdated(selectedDate: _selectedDate));
+                        }
                       },
                       child: Text('Change Date', style: GoogleFonts.openSans(decoration: TextDecoration.underline)),
                     )
@@ -471,7 +500,9 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                     child: GestureDetector(
                       onTap: () async {
                         _startTime = await _getSelectedTime();
-                        print(_startTime);
+                        if (_startTime != null) {
+                          BlocProvider.of<BookingBloc>(context).add(TimeIntervalUpdated(startTime: _startTime));
+                        }
                       },
                       child: Text('Change S. time', style: GoogleFonts.openSans(decoration: TextDecoration.underline)),
                     )
@@ -480,13 +511,25 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                     child: GestureDetector(
                       onTap: () async {
                         _endTime = await _getSelectedTime();
-                        print(_endTime);
+                        if (_endTime != null) {
+                          BlocProvider.of<BookingBloc>(context).add(TimeIntervalUpdated(endTime: _endTime));
+                        }
                       },
                       child: Text('Change E. time', style: GoogleFonts.openSans(decoration: TextDecoration.underline)),
                     )
                   )
                 ],
               ),
+              if (state.startTime != null && state.endTime != null && !state.isTimeCorrect)
+                Text('Time invalid !!', style: GoogleFonts.openSans(color: Colors.red))
+              else if (state.isCheckingOverlap)
+                Text('Checking overlap...', style: GoogleFonts.openSans(color: Colors.orange))
+              else if (state.selectedDate != null && state.startTime != null && state.endTime != null && state.isRoomTimeValid != null && !state.isRoomTimeValid)
+                Text('Your timing is overlappred with others...', style: GoogleFonts.openSans(color: Colors.red))
+              else if (state.selectedDate != null && state.startTime != null && state.endTime != null && state.isRoomTimeValid != null && state.isRoomTimeValid)
+                Text('For now, you can submit...', style: GoogleFonts.openSans(color: Colors.green))
+              else
+                Text('', style: GoogleFonts.openSans()),
               SizedBox(height: 16.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -501,8 +544,10 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                     child: Text('Prev', style: GoogleFonts.openSans()),
                   ),
                   RaisedButton(
-                    onPressed: () {
-                      print('submit');
+                    onPressed: (!state.isRoomTimeValid || state.isSubmitting)
+                    ? null
+                    : () {
+                      BlocProvider.of<BookingBloc>(context).add(SubmitButtonPressed());
                     },
                     child: Text('Submit', style: GoogleFonts.openSans()),
                   ),

@@ -125,12 +125,31 @@ class BookingState {
             && (this.endTime != null));
   }
 
+  BookingState resetRoomDate(roomId) {
+    return BookingState(
+      roomList: this.roomList,
+      title: this.title,
+      detail: this.detail,
+      tags: this.tags,
+      roomId: roomId,
+      selectedDate: null,
+      startTime: this.startTime,
+      endTime: this.endTime,
+      isLoading: this.isLoading,
+      isTimeCorrect: this.isTimeCorrect,
+      isCheckingOverlap: this.isCheckingOverlap,
+      isRoomTimeValid: this.isRoomTimeValid,
+      isSubmitting: isSubmitting,
+      isSuccess: isSuccess,
+    );
+  }
+
   BookingState _copyWith({
     List<Map> roomList,
     String title,
     String detail,
     List<String> tags,
-    String roomId,
+    int roomId,
     DateTime selectedDate,
     DateTime startTime,
     DateTime endTime,

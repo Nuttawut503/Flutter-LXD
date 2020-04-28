@@ -56,43 +56,52 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
   }
 
   Stream<BookingState> _mapRoomDateUpdatedToState({int roomId, DateTime selectedDate}) async* {
-    roomId = (roomId == null)? state.roomId: int.parse(roomId.toString());
-    yield state.updateRoomDate(roomId: roomId, selectedDate: selectedDate);
-    if (state.updateRoomDate(roomId: roomId, selectedDate: selectedDate).isTimeCompleted()) {
-      yield state.updateStatus(isCheckingOverlap: true);
-      bool isOverlapped = await _roomRepository.isTimeOverlapped(
-        roomId: roomId ?? state.roomId,
-        selectedDate: selectedDate ?? state.selectedDate,
-        startTime: state.startTime,
-        endTime: state.endTime,
-      );
-      if (isOverlapped) {
-        yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: false);
-      } else {
-        yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: true);
+    roomId = roomId ?? state.roomId;
+    if (selectedDate == null) {
+      yield state.resetRoomDate(roomId);
+    } else {
+      yield state.updateRoomDate(roomId: roomId, selectedDate: selectedDate);
+      if (state.updateRoomDate(roomId: roomId, selectedDate: selectedDate).isTimeCompleted()) {
+        yield state.updateStatus(isCheckingOverlap: true);
+        bool isOverlapped = await _roomRepository.isTimeOverlapped(
+          roomId: roomId ?? state.roomId,
+          selectedDate: selectedDate ?? state.selectedDate,
+          startTime: state.startTime,
+          endTime: state.endTime,
+        );
+        if (isOverlapped) {
+          yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: false);
+        } else {
+          yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: true);
+        }
       }
     }
   }
 
   Stream<BookingState> _mapTimeIntervalUpdatedToState({DateTime startTime, DateTime endTime}) async* {
+    startTime = startTime ?? state.startTime;
+    endTime = endTime ?? state.endTime;
+    print(endTime);
     yield state.updateTimeInterval(startTime: startTime, endTime: endTime);
-    if (!startTime.isBefore(endTime)) {
-      yield state.updateStatus(isTimeCorrect: false);
-    } else {
-      yield state.updateStatus(isTimeCorrect: true);
-    }
-    if (state.updateTimeInterval(startTime: startTime, endTime: endTime).isTimeCompleted()) {
-      yield state.updateStatus(isCheckingOverlap: true);
-      bool isOverlapped = await _roomRepository.isTimeOverlapped(
-        roomId: state.roomId,
-        selectedDate: state.selectedDate,
-        startTime: startTime ?? state.startTime,
-        endTime: endTime ?? state.endTime,
-      );
-      if (isOverlapped) {
-        yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: false);
+    if (startTime != null && endTime != null) {
+      if (!startTime.isBefore(endTime)) {
+        yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: false);
       } else {
-        yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: true);
+        yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true);
+        if (state.updateTimeInterval(startTime: startTime, endTime: endTime).isTimeCompleted()) {
+          yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true, isCheckingOverlap: true);
+          bool isOverlapped = await _roomRepository.isTimeOverlapped(
+            roomId: state.roomId,
+            selectedDate: state.selectedDate,
+            startTime: startTime ?? state.startTime,
+            endTime: endTime ?? state.endTime,
+          );
+          if (isOverlapped) {
+            yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true, isCheckingOverlap: false, isRoomTimeValid: false);
+          } else {
+            yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true, isCheckingOverlap: false, isRoomTimeValid: true);
+          }
+        }
       }
     }
   }
