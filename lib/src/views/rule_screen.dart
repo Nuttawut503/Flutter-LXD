@@ -56,7 +56,7 @@ class _HeaderRule extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            'Rules',
+            'Intriguing information',
             style: GoogleFonts.openSans(fontSize: 19.0)
           ),
           Spacer(),
@@ -110,29 +110,206 @@ class _ContentRule extends StatelessWidget {
                   SizedBox(height: 25,),
                   Text('General Regulations', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
                   SizedBox(height: 15,),
-                  InkWell(
-                    onTap: () => _popupDialog(context),
-                    child: Card(
-                      child: ListTile(
-                        leading: Icon(Icons.assignment, size: 55,),
-                        title: Text('Credit Assesments'),
-                        subtitle: Text(
-                            'Wonder how much credits you should be taking?'
+                  SizedBox( width: 500, height: 300,
+                    child: ListView(
+                      children: <Widget>[
+                        Card(
+                          child: ListTile(
+                            onTap: () => _popupDialog(context, 1),
+                            leading: Icon(Icons.assignment, size: 55, color: Colors.deepPurpleAccent,),
+                            title: Text('Credit Assesments'),
+                            subtitle: Text(
+                                'Wonder how much credits you should be taking?'
+                            ),
+                            isThreeLine: true,
+                            trailing: Icon(Icons.more_vert),
+                          ),
                         ),
-                        isThreeLine: true,
-                        trailing: Icon(Icons.more_vert),
-                      ),
+                        SizedBox(height: 15,),
+                        Card(
+                          child: ListTile(
+                            onTap: () => _popupDialog(context, 2),
+                            leading: Icon(Icons.priority_high, size: 55, color: Colors.cyan,),
+                            title: Text('Withdrawing Courses'),
+                            subtitle: Text(
+                                'How do I withdraw from certain courses?'
+                            ),
+                            isThreeLine: true,
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                        Card(
+                          child: ListTile(
+                            onTap: () => _popupDialog(context, 3),
+                            leading: Icon(Icons.grade, size: 55, color: Colors.pinkAccent,),
+                            title: Text('Grading System'),
+                            subtitle: Text(
+                                'Wonder what grade and how well you\'ll get?'
+                            ),
+                            isThreeLine: true,
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 15,),
                 ],
               ),
             ),
             Container(
-              color: Colors.cyan,
+//              color: Colors.cyan,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                      height: 500.0,
+                      width: 300.0,
+                      child: Carousel(
+                        boxFit: BoxFit.cover,
+                        images: [
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://www.halfbakedharvest.com/wp-content/uploads/2018/05/Weeknight-20-Minute-Spicy-Udon-Noodles-1-700x1050.jpg'),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 140,
+                                  child: Text('Noodles', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 220,
+                                  child: Text('@KFC', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://www.justonecookbook.com/wp-content/uploads/2018/11/Easy-Fried-Rice-I.jpg'),
+                                    fit: BoxFit.fitHeight
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 125,
+                                  child: Text('Fried rice', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 190,
+                                  child: Text('@เจ้-porn', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage('https://www.siammakro.co.th/imgadmins/img_detail_food/th/142545.jpg'),
+                                fit: BoxFit.fitHeight
+                              )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 75,
+                                  child: Text('BrownSugar', style: TextStyle(
+                                    color: Colors.pinkAccent,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 115,
+                                  child: Text('@ลุ่งหนุ่ม-square', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://cdn.myanimelist.net/s/common/uploaded_files/1452233251-a47793a705e917c1754afd47cda99d9f.jpeg'),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 200,
+                                  child: Text('Sena', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 175,
+                                  child: Text('Best waifu', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        dotSize: 4.0,
+                        dotSpacing: 15.0,
+                        dotColor: Colors.lightGreenAccent,
+                        indicatorBgPadding: 5.0,
+                        dotBgColor: Colors.pinkAccent.withOpacity(0.5),
+                        borderRadius: true,
+                      )
+                  ),
+                  SizedBox(height: 20,),
+                  Text('Food near the area', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
+                ],
+              ),
             ),
             Container(
-              color: Colors.deepPurpleAccent,
+//              color: Colors.deepPurpleAccent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('More interesting stuff comming soon', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300), textAlign: TextAlign.center,),
+              ],
+            ),
             ),
           ],
         ),
@@ -147,19 +324,107 @@ class _ContentRule extends StatelessWidget {
     )
   );
 
-  void _popupDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Alert Dialog Example !!!'),
-            content: Text('Alert Dialog Body Goes Here  ..'),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Close')),
-            ],
-          );
-        });
+  void _popupDialog(BuildContext context,number) {
+    if(number == 1){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('The number of credits for each semester'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[0]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[1]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[2]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close')),
+              ],
+            );
+          });
+    }
+    else if(number == 2){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Dropping information'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[3]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[4]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close')),
+              ],
+            );
+          });
+    }
+    else if(number == 3){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Dropping information'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[5]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                    SizedBox(height: 10,),
+                    Text('${ruleDetails[6]}'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close')),
+              ],
+            );
+          });
+    }
   }
+  List<String> ruleDetails = ["Students are allowed to register with a minimum of 12 credits and a maximum of 19 credits in each regular semester. Exceptions can be approved in accordance with the program regulations.",
+    "Students who register for less than the minimum or more than the maximum required must receive approval from their academic advisor, but this must not exceed 3 credits" +
+  "and the total credits must not exceed 22 credits per regular semester." +
+  "In the case that students have to register less than or exceed the number of credits mentioned in the first paragraph, they must be granted the approval from the head of department and the Faculty Committee.",
+  "Students must not register in courses which overlap study hours and examination" +
+  "hours, except for the following exceptions may register in courses which overlap examination hours with the approval of their academic advisor;",
+  "Dropping can be done before the midterm examination for a regular semester or within the first two weeks of instruction for a special semester with the approval from the academic advisor. The result of dropped courses will not appear in the academic record." +
+  "The university will give an 80% refund to students who drop from a course during the first two weeks of instruction for a regular semester or within the first week of instruction for a special semester, except for students who are studying in the commutation program.",
+  "A request for withdrawing from courses must be processed 3 weeks before the final" +
+  "examination for a regular semester. For a special semester, it must be processed after two weeks, but not later than the first 4 weeks of instruction. The withdrawn courses will appear as ‘W’ in the academic record.",
+  "Students whose attendance is less than 80% will receive ‘Fa’ from that course and this grade will be calculated in the student’s GPA of that semester and the cumulative GPA, except cumulative GPA calculation that includes repeated courses as mentioned in 28.3.",
+  "If students fail to attend the examination, they will receive ‘Fe’ from that course and this grade will be calculated in the student’s GPA of that semester, except cumulative GPA calculation that includes of repeated courses as mentioned in 28.3." +
+  "Students who fail to attend the examination due to reasons mentioned in item 50.2 will be considered by the Faculty Committee."];
 }
