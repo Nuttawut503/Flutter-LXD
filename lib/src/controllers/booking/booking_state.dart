@@ -138,7 +138,7 @@ class BookingState {
       isLoading: this.isLoading,
       isTimeCorrect: this.isTimeCorrect,
       isCheckingOverlap: this.isCheckingOverlap,
-      isRoomTimeValid: this.isRoomTimeValid,
+      isRoomTimeValid: false,
       isSubmitting: isSubmitting,
       isSuccess: isSuccess,
     );

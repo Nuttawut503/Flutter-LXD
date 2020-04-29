@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:LXD/src/controllers/booking/bloc.dart';
+import 'package:LXD/src/api/event_repository.dart';
 import 'package:LXD/src/api/room_repository.dart';
 
 class BookingBloc extends Bloc<BookingEvent, BookingState> {
   final String _userId;
+  EventRepository _eventRepository = EventRepository();
   RoomRepository _roomRepository = RoomRepository();
 
   BookingBloc({@required String userId})
@@ -63,16 +65,16 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       yield state.updateRoomDate(roomId: roomId, selectedDate: selectedDate);
       if (state.updateRoomDate(roomId: roomId, selectedDate: selectedDate).isTimeCompleted()) {
         yield state.updateStatus(isCheckingOverlap: true);
-        bool isOverlapped = await _roomRepository.isTimeOverlapped(
+        bool isOverlapped = await _roomRepository.isRoomTimeOverlapped(
           roomId: roomId ?? state.roomId,
           selectedDate: selectedDate ?? state.selectedDate,
           startTime: state.startTime,
           endTime: state.endTime,
         );
         if (isOverlapped) {
-          yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: false);
+          yield state.updateRoomDate(roomId: roomId, selectedDate: selectedDate).updateStatus(isCheckingOverlap: false, isRoomTimeValid: false);
         } else {
-          yield state.updateStatus(isCheckingOverlap: false, isRoomTimeValid: true);
+          yield state.updateRoomDate(roomId: roomId, selectedDate: selectedDate).updateStatus(isCheckingOverlap: false, isRoomTimeValid: true);
         }
       }
     }
@@ -90,11 +92,11 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true);
         if (state.updateTimeInterval(startTime: startTime, endTime: endTime).isTimeCompleted()) {
           yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true, isCheckingOverlap: true);
-          bool isOverlapped = await _roomRepository.isTimeOverlapped(
+          bool isOverlapped = await _roomRepository.isRoomTimeOverlapped(
             roomId: state.roomId,
             selectedDate: state.selectedDate,
-            startTime: startTime ?? state.startTime,
-            endTime: endTime ?? state.endTime,
+            startTime: startTime,
+            endTime: endTime,
           );
           if (isOverlapped) {
             yield state.updateTimeInterval(startTime: startTime, endTime: endTime).updateStatus(isTimeCorrect: true, isCheckingOverlap: false, isRoomTimeValid: false);
@@ -108,7 +110,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
 
   Stream<BookingState> _mapSubmitButtonPressedToState() async* {
     yield state.updateStatus(isSubmitting: true);
-    bool isOverlapped = await _roomRepository.isTimeOverlapped(
+    bool isOverlapped = await _roomRepository.isRoomTimeOverlapped(
         roomId: state.roomId,
         selectedDate: state.selectedDate,
         startTime: state.startTime,
@@ -117,7 +119,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     if (isOverlapped) {
       yield state.updateStatus(isRoomTimeValid: false, isSubmitting: false);
     } else {
-      await _roomRepository.addEvent(
+      await _eventRepository.addEvent(
         reserverId: '$_userId',
         title: state.title,
         detail: state.detail,
