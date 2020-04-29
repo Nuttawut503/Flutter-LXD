@@ -18,6 +18,10 @@ class EventBloc extends Bloc<EventEvent, EventState> {
       yield* _mapLoadingStartedToState();
     } else if (event is TextFilterUpdated) {
       yield* _mapTextFilterUpdatedToState(event.text);
+    } else if (event is MarkerDismissed) {
+      yield* _mapMarkerDismissedToState();
+    } else if (event is MarkerTouched) {
+      yield* _mapMarkerTouchedToState(event.index);
     }
   }
 
@@ -30,5 +34,13 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
   Stream<EventState> _mapTextFilterUpdatedToState(text) async* {
     yield state.updateTextFilter(text);
+  }
+
+  Stream<EventState> _mapMarkerDismissedToState() async* {
+    yield state.dismissRoomId();
+  }
+
+  Stream<EventState> _mapMarkerTouchedToState(index) async* {
+    yield state.touchRoomId(index);
   }
 }

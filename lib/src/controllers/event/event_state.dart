@@ -46,6 +46,28 @@ class EventState {
     );
   }
 
+  List<Map> filteredList() {
+    return eventList.where((elem) => elem['title'].toString().toLowerCase().indexOf(textFilter.toLowerCase()) != -1 && (!hasCondition || elem['room_id'] == selectedRoomId.toString())).toList();
+  }
+
+  EventState dismissRoomId() {
+    return EventState(
+      isLoading: this.isLoading,
+      roomList: this.roomList,
+      eventList: this.eventList,
+      textFilter: this.textFilter,
+      hasCondition: false,
+      selectedRoomId: null,
+    );
+  }
+
+  EventState touchRoomId(index) {
+    return _copyWith(
+      hasCondition: true,
+      selectedRoomId: index,
+    );
+  }
+
   EventState _copyWith({
     bool isLoading,
     List<Map> roomList,

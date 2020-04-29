@@ -18,3 +18,14 @@ class TextFilterUpdated extends EventEvent {
   @override
   List<Object> get props => [text];
 }
+
+class MarkerDismissed extends EventEvent {}
+
+class MarkerTouched extends EventEvent {
+  final int index;
+
+  const MarkerTouched({@required this.index});
+
+  @override
+  List<Object> get props => [index];
+}

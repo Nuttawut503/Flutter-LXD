@@ -119,7 +119,7 @@ class _EventView extends StatefulWidget {
   State<_EventView> createState() => _EventViewState();
 }
 
-class _EventViewState extends State<_EventView> {
+class _EventViewState extends State<_EventView> with TickerProviderStateMixin {
   Timer _debounce;
   @override
   void dispose() {
@@ -169,17 +169,15 @@ class _EventViewState extends State<_EventView> {
             SizedBox(height: 12.0,),
             Align(
               alignment: Alignment.center,
-              child: Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: BoxDecoration(color: Colors.red),
-              ),
+              child: _BuildingMarker(),
             ),
             SizedBox(height: 12.0,),
             Expanded(
               child: ListView(
                 children: [
-                  for (Map evt in state.eventList.where((el) => el['title'].toString().toLowerCase().indexOf(state.textFilter.toLowerCase()) != -1))
+                  if (state.hasCondition)
+                    _RoomCard(room: state.roomList[state.selectedRoomId]),
+                  for (Map evt in state.filteredList())
                     _EventCard(
                       title: evt['title'],
                       date: evt['schedule']['date'],
@@ -195,6 +193,105 @@ class _EventViewState extends State<_EventView> {
           ],
         );
       },
+    );
+  }
+}
+
+class _BuildingMarker extends StatelessWidget {
+  final double _imageWidth = 200.0, _imageHeight = 200.0;
+  final _mockUpPosition = [Offset(20.0, 35.0), Offset(60.0, 20.0), Offset(47.0, 50.0)];
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EventBloc, EventState>(
+      builder: (context, state) {
+        return Stack(
+          overflow: Overflow.visible,
+          children: [
+            GestureDetector(
+              onTap: () {
+                BlocProvider.of<EventBloc>(context).add(MarkerDismissed());
+              },
+              child: Container(
+                width: _imageWidth,
+                height: _imageWidth,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/building_plan.png'),
+                    fit: BoxFit.cover
+                  )
+                ),
+                child: CustomPaint(
+                  painter: HightlightPainter(index: state.selectedRoomId),
+                  child: Container(),
+                ),
+              ),
+            ),
+            for (int i = 0; i < _mockUpPosition.length; ++i) 
+              (!state.hasCondition || i != state.selectedRoomId)?Positioned(
+                top: _mockUpPosition[i].dy / 100 * _imageHeight,
+                left: _mockUpPosition[i].dx / 100 * _imageWidth,
+                child: GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<EventBloc>(context).add(MarkerTouched(index: i));
+                  },
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle)
+                  ),
+                )
+              ):Text(''),
+            
+          ],
+        ); 
+      },
+    );
+  }
+}
+
+class _RoomCard extends StatelessWidget {
+  final Map _room;
+
+  _RoomCard({@required room})
+      : _room = room;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(9.0),
+      ),
+      child: ListTile(
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CachedNetworkImage(
+                width: 36.0,
+                height: 36.0,
+                fit: BoxFit.cover,
+                imageUrl: '${_room['picture']}',
+                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                  child: CircularProgressIndicator(value: downloadProgress.progress),
+                ), 
+                errorWidget: (context, url, error) => Center(
+                  child: Icon(FontAwesomeIcons.exclamationTriangle),
+                ),
+              ),
+              SizedBox(width: 16.0),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('${_room['name']}', style: GoogleFonts.openSans()),
+                  Text('${_room['detail']}', style: GoogleFonts.openSans(fontSize: 13.0))
+                ],
+              )
+            ],
+          )
+        ),
+      )
     );
   }
 }
@@ -274,5 +371,114 @@ class _EventCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class HightlightPainter extends CustomPainter {
+  final int _index;
+  final _rooms = [
+    [
+      [
+        Offset(21.0, 10.0),
+        Offset(7.0, 58.0),
+        Offset(30.0, 61.0),
+        Offset(44.0, 17.0),
+        Offset(21.0, 10.0),
+      ],
+      [
+        Offset(7.0, 58.0),
+        Offset(9.0, 70.0),
+        Offset(31.0, 73.0),
+        Offset(30.0, 61.0),
+        Offset(7.0, 58.0),
+      ],
+      [
+        Offset(44.0, 17.0),
+        Offset(30.0, 61.0),
+        Offset(31.0, 73.0),
+        Offset(48.0, 25.0),
+        Offset(44.0, 17.0),
+      ]
+    ],
+    [
+      [
+        Offset(60.0, 11.0),
+        Offset(50.0, 31.0),
+        Offset(74.0, 40.0),
+        Offset(85.0, 16.0),
+        Offset(60.0, 11.0),
+      ],
+      [
+        Offset(85.0, 16.0),
+        Offset(74.0, 40.0),
+        Offset(76.0, 49.0),
+        Offset(89.0, 25.0),
+        Offset(85.0, 16.0),
+      ],
+      [
+        Offset(50.0, 31.0),
+        Offset(50.0, 41.0),
+        Offset(76.0, 49.0),
+        Offset(74.0, 40.0),
+        Offset(50.0, 31.0),
+      ]
+    ],
+    [
+      [
+        Offset(50.0, 46.0),
+        Offset(42.0, 65.0),
+        Offset(54.0, 65.0),
+        Offset(62.0, 72.0),
+        Offset(65.0, 56.0),
+        Offset(61.0, 50.0),
+        Offset(55.0, 46.0),
+        Offset(50.0, 46.0),
+      ],
+      [
+        Offset(42.0, 65.0),
+        Offset(46.0, 75.0),
+        Offset(61.0, 71.0),
+        Offset(68.0, 64.0),
+        Offset(65.0, 56.0),
+        Offset(62.0, 62.0),
+        Offset(54.0, 65.0),
+        Offset(42.0, 65.0),
+      ]
+    ]
+  ];
+
+  HightlightPainter({@required int index})
+      : _index = index;
+
+  @override
+  void paint(Canvas canvas, Size size) {;
+    if (_index == null) {
+      return;
+    }
+    Paint paint = new Paint()
+      ..color = Color.fromRGBO(197, 197, 0, 0.7)
+      ..style = PaintingStyle.fill;
+    Path path = new Path();
+    _rooms[_index].forEach((List roomPath){
+      path.moveTo(roomPath.last.dx / 100 * size.width, roomPath.last.dy / 100 * size.height);
+      roomPath.forEach((element) {
+        path.lineTo(element.dx / 100 * size.width, element.dy / 100 * size.height);
+      });
+    });
+    // path.moveTo(_rooms[_index].last.dx / 100 * size.width, _rooms[_index].last.dy / 100 * size.height);
+    // _rooms[_index].forEach((Offset point) {
+    //   path.lineTo(point.dx / 100 * size.width, point.dy / 100 * size.height);
+    // });
+    canvas.drawPath(path, paint);
+    paint
+      ..color = Color.fromRGBO(197, 197, 197, 0.6)
+      ..strokeWidth = 3.9
+      ..style = PaintingStyle.stroke;
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(HightlightPainter oldDelegate) {
+    return (oldDelegate._index != _index);
   }
 }
