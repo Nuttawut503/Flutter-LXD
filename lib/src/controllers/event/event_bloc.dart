@@ -16,6 +16,8 @@ class EventBloc extends Bloc<EventEvent, EventState> {
   Stream<EventState> mapEventToState(EventEvent event) async* {
     if (event is LoadingStarted) {
       yield* _mapLoadingStartedToState();
+    } else if (event is TextFilterUpdated) {
+      yield* _mapTextFilterUpdatedToState(event.text);
     }
   }
 
@@ -24,5 +26,9 @@ class EventBloc extends Bloc<EventEvent, EventState> {
       roomList: await _roomRepository.getAllRoomList(),
       eventList: await _eventRepository.getAllEventList(),
     );
+  }
+
+  Stream<EventState> _mapTextFilterUpdatedToState(text) async* {
+    yield state.updateTextFilter(text);
   }
 }

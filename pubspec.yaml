@@ -34,6 +34,7 @@ dependencies:
   google_maps_flutter: ^0.5.20
   carousel_pro: ^1.0.0
   bottom_navy_bar: ^5.4.0
+  badges: ^1.1.1
 
 dev_dependencies:
   flutter_test:

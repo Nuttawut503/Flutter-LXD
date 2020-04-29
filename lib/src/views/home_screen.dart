@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:LXD/src/api/user_repository.dart';
 import 'package:LXD/src/views/setting_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:LXD/src/views/building_plan_screen.dart';

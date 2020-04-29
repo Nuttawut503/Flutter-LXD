@@ -10,11 +10,11 @@ abstract class EventEvent extends Equatable {
 
 class LoadingStarted extends EventEvent {}
 
-class DetailUpdated extends EventEvent {
-  final String detail;
+class TextFilterUpdated extends EventEvent {
+  final String text;
 
-  const DetailUpdated({@required this.detail});
+  const TextFilterUpdated({@required this.text});
 
   @override
-  List<Object> get props => [detail];
+  List<Object> get props => [text];
 }
