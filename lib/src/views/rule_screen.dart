@@ -56,7 +56,7 @@ class _HeaderRule extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            'Rules',
+            'Intriguing information',
             style: GoogleFonts.openSans(fontSize: 19.0)
           ),
           Spacer(),
@@ -159,10 +159,157 @@ class _ContentRule extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.cyan,
+//              color: Colors.cyan,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                      height: 500.0,
+                      width: 300.0,
+                      child: Carousel(
+                        boxFit: BoxFit.cover,
+                        images: [
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://www.halfbakedharvest.com/wp-content/uploads/2018/05/Weeknight-20-Minute-Spicy-Udon-Noodles-1-700x1050.jpg'),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 140,
+                                  child: Text('Noodles', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 220,
+                                  child: Text('@KFC', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://www.justonecookbook.com/wp-content/uploads/2018/11/Easy-Fried-Rice-I.jpg'),
+                                    fit: BoxFit.fitHeight
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 125,
+                                  child: Text('Fried rice', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 190,
+                                  child: Text('@เจ้-porn', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage('https://www.siammakro.co.th/imgadmins/img_detail_food/th/142545.jpg'),
+                                fit: BoxFit.fitHeight
+                              )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 75,
+                                  child: Text('BrownSugar', style: TextStyle(
+                                    color: Colors.pinkAccent,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 115,
+                                  child: Text('@ลุ่งหนุ่ม-square', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage('https://cdn.myanimelist.net/s/common/uploaded_files/1452233251-a47793a705e917c1754afd47cda99d9f.jpeg'),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                            child:  Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 400,
+                                  left: 200,
+                                  child: Text('Sena', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                                ),
+                                Positioned(
+                                  top: 440,
+                                  left: 175,
+                                  child: Text('Best waifu', style: TextStyle(
+                                      color: Colors.pinkAccent,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w400
+                                  ),),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        dotSize: 4.0,
+                        dotSpacing: 15.0,
+                        dotColor: Colors.lightGreenAccent,
+                        indicatorBgPadding: 5.0,
+                        dotBgColor: Colors.pinkAccent.withOpacity(0.5),
+                        borderRadius: true,
+                      )
+                  ),
+                  SizedBox(height: 20,),
+                  Text('Food near the area', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
+                ],
+              ),
             ),
             Container(
-              color: Colors.deepPurpleAccent,
+//              color: Colors.deepPurpleAccent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('More interesting stuff comming soon', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300), textAlign: TextAlign.center,),
+              ],
+            ),
             ),
           ],
         ),

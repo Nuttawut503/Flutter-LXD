@@ -317,11 +317,11 @@ class _ContentHome extends StatelessWidget {
                               style: GoogleFonts.openSans(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w300,),
                             ),
                             Text(
-                              'Set of',
+                              'Intriguing',
                               style: GoogleFonts.openSans(color: Colors.white, fontSize: 25.0,),
                             ),
                             Text(
-                              'Regulations',
+                              'Information',
                               style: GoogleFonts.openSans(color: Colors.white, fontSize: 25.0,),
                             ),
                             Image.asset(
