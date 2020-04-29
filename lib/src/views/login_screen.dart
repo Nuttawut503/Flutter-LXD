@@ -67,8 +67,8 @@ class _BackgroundLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     decoration: BoxDecoration(
-      color: Colors.blueAccent,
-      image: DecorationImage(image: AssetImage('images/background_login.png'), fit: BoxFit.cover),
+      color: Color.fromRGBO(208, 219, 217, 1.0),
+      //image: DecorationImage(image: AssetImage('images/background_login.png'), fit: BoxFit.cover),
     ),
   );
 }
