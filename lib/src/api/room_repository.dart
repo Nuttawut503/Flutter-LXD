@@ -82,9 +82,6 @@ class RoomRepository {
   }
 
   bool overlapped(DateTime s1, DateTime e1, DateTime s2, DateTime e2) {
-    if (s1.isBefore(e2) && !s1.isBefore(s2)) return true;
-    if (e1.isAfter(s2) && !e1.isAfter(e2)) return true;
-    if (!s1.isAfter(s2) && !e1.isBefore(e2)) return true;
-    return false;
+    return s1.isBefore(e2) && s2.isBefore(e1);
   }
 }
