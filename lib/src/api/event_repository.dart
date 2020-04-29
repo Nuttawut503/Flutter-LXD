@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventRepository {
@@ -22,11 +23,50 @@ class EventRepository {
   }
 
   Future<void> deleteEvent(eventId) async {
-    _eventCollection.document(eventId).delete();
+    await _eventCollection.document(eventId).delete();
   }
 
   Future<void> editEvent(eventId, editedEvent) async {
-    _eventCollection.document(eventId).updateData(editedEvent);
+    await _eventCollection.document(eventId).updateData(editedEvent);
+  }
+
+  Future<Map> getEventDetailById(eventId) async {
+    Map result = (await _eventCollection.document('$eventId').get()).data;
+    result['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['start_time'].seconds * 1000));
+    result['schedule']['start_time'] = DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['start_time'].seconds * 1000));
+    result['schedule']['end_time'] = DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['end_time'].seconds * 1000));
+    return result;
+  }
+
+  Future<List<Map>> getAllEventList() async {
+    List<Map> result = [];
+    final eventSnapshot = await _eventCollection
+                          .where('schedule.end_time', isGreaterThanOrEqualTo: DateTime.now())
+                          .getDocuments();
+    eventSnapshot.documents.forEach((doc) {
+      Map row = doc.data;
+      row['event_id'] = doc.documentID;
+      row['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(row['schedule']['start_time'].seconds * 1000));
+      row['schedule']['start_time'] = DateTime.fromMillisecondsSinceEpoch(row['schedule']['start_time'].seconds * 1000);
+      row['schedule']['end_time'] = DateTime.fromMillisecondsSinceEpoch(row['schedule']['end_time'].seconds * 1000);
+      result.add(row);
+    });
+    result.sort((a, b) {
+      DateTime s1 = a['schedule']['start_time'];
+      DateTime e1 = a['schedule']['end_time'];
+      DateTime s2 = b['schedule']['start_time'];
+      DateTime e2 = b['schedule']['end_time'];
+      int fCompare = s1.compareTo(s2);
+      if (fCompare == 0) {
+        return e1.compareTo(e2);
+      }
+      return fCompare;
+    });
+    for (int i = 0; i < result.length; ++i) {
+      result[i]['schedule']['start_time'] = DateFormat.Hm().format(result[i]['schedule']['start_time']);
+      result[i]['schedule']['end_time'] = DateFormat.Hm().format(result[i]['schedule']['end_time']);
+    }
+    return result;
   }
 
   Future<bool> hasEventTimeOverlapped({int roomId, DateTime selectedDate, DateTime startTime, DateTime endTime}) async {

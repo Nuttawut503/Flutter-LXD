@@ -11,13 +11,10 @@ import 'package:LXD/src/views/google_map_screen.dart';
 import 'package:LXD/src/views/rule_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final UserRepository _userRepository;
   final Map _currentUser;
 
-  HomeScreen({Key key, @required UserRepository userRepository, Map currentUser})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        _currentUser = currentUser,
+  HomeScreen({Key key, Map currentUser})
+      : _currentUser = currentUser,
         super(key: key);
 
   @override

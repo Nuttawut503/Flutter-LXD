@@ -56,6 +56,10 @@ class UserRepository {
     }
   }
 
+  Future<String> findNameOfUserById(userId) async {
+    return (await _userCollection.document('$userId').get()).data['name'];
+  }
+
   Future<void> signOut() async {
     return Future.wait([
       _firebaseAuth.signOut(),

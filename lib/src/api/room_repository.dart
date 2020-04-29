@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:LXD/src/api/event_repository.dart';
 
 class RoomRepository {
-  final eventCollection = Firestore.instance.collection('events');
   final roomCollection = Firestore.instance.collection('rooms');
   final _eventRepository = EventRepository();
 
@@ -14,6 +13,10 @@ class RoomRepository {
       result.add(doc.data);
     });
     return result;
+  }
+
+  Future<String> getRoomNameById(roomId) async {
+    return (await roomCollection.where('id', isEqualTo: roomId).getDocuments()).documents[0].data['name'];
   }
 
   Future<bool> isRoomTimeOverlapped({int roomId, DateTime selectedDate, DateTime startTime, DateTime endTime}) async {
