@@ -96,30 +96,31 @@ class _ContentRule extends StatelessWidget {
                       width: 350.0,
                       child: Carousel(
                         images: [
-                          Image.asset('images/logo_app.png'),
-                          Image.network('https://cdn.myanimelist.net/s/common/uploaded_files/1452233251-a47793a705e917c1754afd47cda99d9f.jpeg'),
+                          Image.network('https://ene.kmutt.ac.th/wp-content/uploads/2019/01/49708661_309802466316862_8938973613344686080_n.jpg', fit: BoxFit.cover,),
+                          Image.network('https://lh3.googleusercontent.com/proxy/RJnnldzuxEQ0yiKEitCrCt4u-CgPCE8rvmAlU2-XU-ouiyLI8iU3_bucW_fDmBH8jIitZA-zNr7SprIyhLfaB_99NrYz0nczX5Do0DjdOOQuoYUMEA5hfm9OpyY'),
+//                          Image.network('https://cdn.myanimelist.net/s/common/uploaded_files/1452233251-a47793a705e917c1754afd47cda99d9f.jpeg'),
                         ],
                         dotSize: 4.0,
                         dotSpacing: 15.0,
-                        dotColor: Colors.lightGreenAccent,
+                        dotColor: Colors.yellow,
                         indicatorBgPadding: 5.0,
-                        dotBgColor: Colors.pinkAccent.withOpacity(0.5),
+//                        dotBgColor: Colors.deepOrangeAccent.withOpacity(0.5),
                         borderRadius: true,
                       )
                   ),
                   SizedBox(height: 25,),
-                  Text('General Regulations', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
+                  Text('LX information', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),),
                   SizedBox(height: 15,),
                   SizedBox( width: 500, height: 300,
                     child: ListView(
                       children: <Widget>[
                         Card(
                           child: ListTile(
-                            onTap: () => _popupDialog(context, 1),
-                            leading: Icon(Icons.assignment, size: 55, color: Colors.deepPurpleAccent,),
-                            title: Text('Credit Assesments'),
+                            onTap: () => _popupDialog(context, 2),
+                            leading: Icon(Icons.priority_high, size: 55, color: Colors.cyan,),
+                            title: Text('What is LX?'),
                             subtitle: Text(
-                                'Wonder how much credits you should be taking?'
+                                'Wonder why and how LX was created?'
                             ),
                             isThreeLine: true,
                             trailing: Icon(Icons.more_vert),
@@ -128,11 +129,11 @@ class _ContentRule extends StatelessWidget {
                         SizedBox(height: 15,),
                         Card(
                           child: ListTile(
-                            onTap: () => _popupDialog(context, 2),
-                            leading: Icon(Icons.priority_high, size: 55, color: Colors.cyan,),
-                            title: Text('Withdrawing Courses'),
+                            onTap: () => _popupDialog(context, 1),
+                            leading: Icon(Icons.accessibility_new, size: 55, color: Colors.deepPurpleAccent,),
+                            title: Text('General outfits'),
                             subtitle: Text(
-                                'How do I withdraw from certain courses?'
+                                'Wonder what to wear when entering LX?'
                             ),
                             isThreeLine: true,
                             trailing: Icon(Icons.more_vert),
@@ -142,10 +143,36 @@ class _ContentRule extends StatelessWidget {
                         Card(
                           child: ListTile(
                             onTap: () => _popupDialog(context, 3),
-                            leading: Icon(Icons.grade, size: 55, color: Colors.pinkAccent,),
-                            title: Text('Grading System'),
+                            leading: Icon(Icons.apps, size: 55, color: Colors.pinkAccent,),
+                            title: Text('Flip Classroom'),
                             subtitle: Text(
-                                'Wonder what grade and how well you\'ll get?'
+                                'What\'s a flip classroom, and what is the purpose of it?'
+                            ),
+                            isThreeLine: true,
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                        Card(
+                          child: ListTile(
+                            onTap: () => _popupDialog(context, 4),
+                            leading: Icon(Icons.blur_circular, size: 55, color: Colors.deepOrangeAccent,),
+                            title: Text('Public Space'),
+                            subtitle: Text(
+                                'What\'s a public space, and what can we do with it?'
+                            ),
+                            isThreeLine: true,
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                        Card(
+                          child: ListTile(
+                            onTap: () => _popupDialog(context, 5),
+                            leading: Icon(Icons.highlight, size: 55, color: Colors.yellow,),
+                            title: Text('Learning Support'),
+                            subtitle: Text(
+                                'Wonder why the room is called learning support?'
                             ),
                             isThreeLine: true,
                             trailing: Icon(Icons.more_vert),
@@ -330,22 +357,31 @@ class _ContentRule extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('The number of credits for each semester'),
+              title: Text('Outfit Regulations'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[0]}'),
+                    Text('นักศึกษาชาย' +
+                    '\n \n-เสื้อ เสื้อเชิ้ตสีขาว แขนสั้น หรือแขนยาว สอดชายเสื้อในกางเกง' +
+                    '\n \n-กางเกง ขายาว สีและแบบสุภาพ มีหูเข็มขัด' +
+                    '\n \n-เข็มขัด หนังสีดำหรือสีน้ำตาล หัวเข็มขัดรูปเครื่องหมายมหาวิทยาลัย' +
+                    '\n \n-รองเท้า หุ้มส้น แบบและสีสุภาพ', textAlign: TextAlign.left,),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[1]}'),
+                    Text('นักศึกษาหญิง' +
+                    '\n \n-เสื้อเชิ้ตสีขาวแขนสั้น ผ่าหน้าตลอด ติดกระดุมเครื่องหมายมหาวิทยาลัย' +
+                        '\n \n-5 เม็ด เวลาสวมให้สอดชายเสื้อไว้ในกระโปรง มีเข็มเครื่องหมาย มหาวิทยาลัย ติดอกเสื้อด้านซ้าย' +
+                      '\n \n-กระโปรง สีกรมท่า สีดำ สีน้ำตาล สีเทา ความยาวคลุมเข่า' +
+                      '\n \n-เข็มขัด สีดำหรือสีน้ำตาล หัวเข็มขัดรูปเครื่องหมายมหาวิทยาลัย' +
+                      '\n \n-รองเท้า หุ้มส้น สีและแบบสุภาพ'),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
-                    SizedBox(height: 10,),
-                    Text('${ruleDetails[2]}'),
-                    SizedBox(height: 10,),
-                    Text('-----------------------------------------------------------'),
+//                    SizedBox(height: 10,),
+//                    Text('${ruleDetails[2]}'),
+//                    SizedBox(height: 10,),
+//                    Text('-----------------------------------------------------------'),
                   ],
                 ),
               ),
@@ -362,16 +398,18 @@ class _ContentRule extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Dropping information'),
+              title: Text('Origin of LX'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[3]}'),
+                    Text("Project background :" +
+                        "\n\nอาคารการเรียนรู้พหุวิทยาการเป็นอาคารที่มีการออกแบบให้สอดคล้องกับการเรียนการสอนในรูปแบบใหม่ ที่กล่าวถึงการสร้างสภาพแวดล้อมให้เหมาะสมกับการเรียนรู้ทั้งในและนอกห้องเรียน (Learning and Living Campus) ตามที่มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรีมีเป้าหมายในการพัฒนาและปรับปรุงกระบวนการเรียนการสอน สนับสนุนให้ผู้ใช้งานอาคาร สามารถรับรู้สารสนเทศพหุวิทยาการโดยอาศัยเทคโนโลยีการสื่อสารและสารสนเทศ (Information  and Communication Technology) ได้เรียนรู้ครบถ้วนตามวงจรการจัดการองค์ความรู้ใหม่ เกิดการเรียนรู้ร่วมกัน  โดยไม่จำกัดสาขาวิชา  ในการบ่มเพาะนักศึกษาทั้งด้านอุปนิสัยและทัศนะการเรียนรู้อย่างมีคุณภาพ เพื่อการพัฒนาสู่การเป็นผู้นำทางการศึกษาในศตวรรษที่ 21"),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[4]}'),
+                    Text("Design concept :" +
+                        "\n\nมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรีมีจุดมุ่งหมายที่จะกระตุ้นให้นักศึกษา และบุคลากรของมหาวิทยาลัย เกิดการประสานองค์ความรู้ที่หลากหลาย และร่วมกันสร้างสรรค์ นวัตกรรมใหม่ ดังนั้นแนวทางการออกแบบอาคารการเรียนรู้พหุวิทยาการจึงมุ่งเน้นให้การเรียนรู้เกิดความสอดคล้องกับบริบททางกายภาพโดยรอบ เอื้อให้ผู้เรียนแต่ละสาขาวิชาสามารถเข้ามาใช้อาคารได้โดยสะดวกมีทางเชื่อมต่อกับ พื้นที่สีเขียว  หรือ 'สวนการศึกษา : Learning Garden' ึ่งจะเป็นแกนหลัก ใจกลางของพื้นที่ มจธ. บางมด ตามผังแม่บทของมหาวิทยาลัย"),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
                   ],
@@ -390,16 +428,63 @@ class _ContentRule extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Dropping information'),
+              title: Text('Details about Flip-Classroom'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[5]}'),
+                    Text('Flip-Classroom' +
+                      '\n\nพื้นที่อเนกประสงค์สำหรับกิจกรรมต่างๆ รองรับผู้ใช้สอยได้ 30-40 คน Multi-Disciplinary Workshop/ Lab Space พื้นที่อเนกประสงค์ที่มีอุปกรณ์รองรับการปฏิบัติการและการวิจัยแบบสหวิทยาการ รวมทั้งเป็นพื้นที่พัฒนา บุคลากรส่งเสริมการเรียนรู้ให้เกิดทักษะเฉพาะทาง Collaborative Working Space พื้นที่สำหรับเรียนรู้ร่วมกันอย่างไม่เป็นทางการ มีลักษณะเป็น Lounge หรือพื้นที่ในแนวทางสัญจร แยกส่วนมาจากกลุ่มห้องเรียน สำหรับ Meeting กลุ่มย่อย'),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close')),
+              ],
+            );
+          });
+    }
+    else if(number == 4){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Details about Public Space'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
                     SizedBox(height: 10,),
-                    Text('${ruleDetails[6]}'),
+                    Text('Public Space' +
+                        '\n\nพพื้นที่อเนกประสงค์สำหรับกิจกรรมต่างๆ รองรับผู้ใช้สอยได้ 30-40 คน Multi-Disciplinary Workshop/ Lab Space พื้นที่อเนกประสงค์ที่มีอุปกรณ์รองรับการปฏิบัติการและการวิจัยแบบสหวิทยาการ รวมทั้งเป็นพื้นที่พัฒนา บุคลากรส่งเสริมการเรียนรู้ให้เกิดทักษะเฉพาะทาง Collaborative Working Space พื้นที่สำหรับเรียนรู้ร่วมกันอย่างไม่เป็นทางการ มีลักษณะเป็น Lounge หรือพื้นที่ในแนวทางสัญจ'),
+                    SizedBox(height: 10,),
+                    Text('-----------------------------------------------------------'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('Close')),
+              ],
+            );
+          });
+    }
+    else if(number == 5){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Details about Learning Support'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    Text('Learning Support' +
+                        '\n\nห้องควบคุมระบบข้อมูลต่างๆ ของมหาวิทยาลัย เนื่องจากอาคารนี้จะต้องเป็น Interactive Data Center คือสามารถสืบค้น สร้างสรรค์ และจัดเก็บข้อมูลที่เกี่ยวเนื่องกับการประสานการเรียนรู้ ผ่านทางระบบอินเตอร์เน็ต ระบบ Data Center จึงมีความสำคัญมากและเป็นเสมือนคลังสมองของมหาวิทยาลัย และที่ขาดไม่ได้คืองานระบบประกอบอาคาร และสำนักงานเจ้าหน้าที่ ที่อำนวยการให้อาคารสามารถใช้งานได้อย่างมีประสิทธิภาพนอกจากเรื่องการเรียนการสอน รูปแบบใหม่แล้ว มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรียังมีความต้องการพื้นที่รองรับนักศึกษาและเจ้าหน้าที่ที่มีจำนวนเพิ่มขึ้น สำหรับ 2 หน่วยงาน คือ สำนักคอมพิวเตอร์ และคณะเทคโนโลยีสารสนเทศ ซึ่งออกแบบให้อยู่บริเวณพื้นที่ชั้นบนของอาคาร'),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
                   ],
@@ -414,17 +499,4 @@ class _ContentRule extends StatelessWidget {
           });
     }
   }
-  List<String> ruleDetails = ["Students are allowed to register with a minimum of 12 credits and a maximum of 19 credits in each regular semester. Exceptions can be approved in accordance with the program regulations.",
-    "Students who register for less than the minimum or more than the maximum required must receive approval from their academic advisor, but this must not exceed 3 credits" +
-  "and the total credits must not exceed 22 credits per regular semester." +
-  "In the case that students have to register less than or exceed the number of credits mentioned in the first paragraph, they must be granted the approval from the head of department and the Faculty Committee.",
-  "Students must not register in courses which overlap study hours and examination" +
-  "hours, except for the following exceptions may register in courses which overlap examination hours with the approval of their academic advisor;",
-  "Dropping can be done before the midterm examination for a regular semester or within the first two weeks of instruction for a special semester with the approval from the academic advisor. The result of dropped courses will not appear in the academic record." +
-  "The university will give an 80% refund to students who drop from a course during the first two weeks of instruction for a regular semester or within the first week of instruction for a special semester, except for students who are studying in the commutation program.",
-  "A request for withdrawing from courses must be processed 3 weeks before the final" +
-  "examination for a regular semester. For a special semester, it must be processed after two weeks, but not later than the first 4 weeks of instruction. The withdrawn courses will appear as ‘W’ in the academic record.",
-  "Students whose attendance is less than 80% will receive ‘Fa’ from that course and this grade will be calculated in the student’s GPA of that semester and the cumulative GPA, except cumulative GPA calculation that includes repeated courses as mentioned in 28.3.",
-  "If students fail to attend the examination, they will receive ‘Fe’ from that course and this grade will be calculated in the student’s GPA of that semester, except cumulative GPA calculation that includes of repeated courses as mentioned in 28.3." +
-  "Students who fail to attend the examination due to reasons mentioned in item 50.2 will be considered by the Faculty Committee."];
 }

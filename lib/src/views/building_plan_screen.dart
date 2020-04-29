@@ -88,7 +88,6 @@ class _ContentBuildingPlan extends StatelessWidget {
               color: Colors.white,
               child: Image.asset('images/FirstFloorPlan3d.png'),
             ),
-
           ],
         ),
       ),
