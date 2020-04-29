@@ -82,7 +82,12 @@ class _ContentBuildingPlan extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // ... add some content here!!
+            Container(
+              width: double.infinity,
+              height: 300,
+              color: Colors.white,
+              child: Image.asset('images/FirstFloorPlan3d.png'),
+            ),
           ],
         ),
       ),
