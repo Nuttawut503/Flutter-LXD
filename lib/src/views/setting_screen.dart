@@ -35,7 +35,7 @@ class _HeaderSetting extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(208, 219, 217, 1.0),
+        color: Color.fromRGBO(229, 229, 255, 1.0),
       ),
       child: Row(
         children: [
@@ -101,7 +101,7 @@ class _ContentSetting extends StatelessWidget {
         padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 48.0),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(208, 219, 217, 1.0),
+          color: Color.fromRGBO(229, 229, 255, 1.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

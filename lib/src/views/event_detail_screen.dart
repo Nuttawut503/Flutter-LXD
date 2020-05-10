@@ -48,7 +48,7 @@ class _HeaderEventDetail extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(208, 219, 217, 1.0),
+        color: Color.fromRGBO(229, 229, 255, 1.0),
       ),
       child: Row(
         children: [
@@ -67,9 +67,11 @@ class _HeaderEventDetail extends StatelessWidget {
             )
           ),
           Spacer(),
-          Text(
-            'Event',
-            style: GoogleFonts.openSans(fontSize: 19.0)
+          BlocBuilder<DetailBloc, DetailState>(
+            builder: (context, state) => Text(
+              state.isLoading? 'Event': '${state.detailInfo['title']}\'s info',
+              style: GoogleFonts.openSans(fontSize: 19.0)
+            ), 
           ),
           Spacer(),
           Opacity(
@@ -98,7 +100,7 @@ class _ContentEventDetail extends StatelessWidget {
       padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0, bottom: 16.0),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(208, 219, 217, 1.0),
+        color: Color.fromRGBO(229, 229, 255, 1.0),
       ),
       child: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {

@@ -1,5 +1,5 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 abstract class EventEvent extends Equatable {
   const EventEvent();
@@ -9,6 +9,15 @@ abstract class EventEvent extends Equatable {
 }
 
 class LoadingStarted extends EventEvent {}
+
+class EventUpdated extends EventEvent {
+  final List<Map> eventList;
+
+  const EventUpdated({@required this.eventList});
+
+  @override
+  List<Object> get props => [eventList];
+}
 
 class TextFilterUpdated extends EventEvent {
   final String text;

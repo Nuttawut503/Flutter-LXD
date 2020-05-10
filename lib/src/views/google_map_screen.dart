@@ -36,7 +36,7 @@ class _HeaderGoogleMap extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(208, 219, 217, 1.0),
+        color: Color.fromRGBO(229, 229, 255, 1.0),
       ),
       child: Row(
         children: [
@@ -79,7 +79,7 @@ class _ContentGoogleMap extends StatelessWidget {
     ? Flexible(
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(208, 219, 217, 1.0),
+          color: Color.fromRGBO(229, 229, 255, 1.0),
         ),
         child: GoogleMap(
           mapType: MapType.normal,

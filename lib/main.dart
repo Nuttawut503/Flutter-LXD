@@ -10,17 +10,13 @@ import 'package:LXD/src/views/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocSupervisor.delegate = SimpleBlocDelegate(); // Debugging will be remove later.
+  BlocSupervisor.delegate = SimpleBlocDelegate();
   final UserRepository userRepository = UserRepository();
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationBloc>(
-          create: (context) => AuthenticationBloc(
-            userRepository: userRepository,
-          )..add(AppStarted()),
-        ),
-      ],
+    BlocProvider<AuthenticationBloc>(
+      create: (context) => AuthenticationBloc(
+        userRepository: userRepository,
+      )..add(AppStarted()),
       child: MyApp(userRepository: userRepository),
     ),
   );

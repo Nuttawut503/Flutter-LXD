@@ -38,35 +38,22 @@ class EventRepository {
     return result;
   }
 
-  Future<List<Map>> getAllEventList() async {
-    List<Map> result = [];
-    final eventSnapshot = await _eventCollection
-                          .where('schedule.end_time', isGreaterThanOrEqualTo: DateTime.now())
-                          .getDocuments();
-    eventSnapshot.documents.forEach((doc) {
-      Map row = doc.data;
-      row['event_id'] = doc.documentID;
-      row['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(row['schedule']['start_time'].seconds * 1000));
-      row['schedule']['start_time'] = DateTime.fromMillisecondsSinceEpoch(row['schedule']['start_time'].seconds * 1000);
-      row['schedule']['end_time'] = DateTime.fromMillisecondsSinceEpoch(row['schedule']['end_time'].seconds * 1000);
-      result.add(row);
-    });
-    result.sort((a, b) {
-      DateTime s1 = a['schedule']['start_time'];
-      DateTime e1 = a['schedule']['end_time'];
-      DateTime s2 = b['schedule']['start_time'];
-      DateTime e2 = b['schedule']['end_time'];
-      int fCompare = s1.compareTo(s2);
-      if (fCompare == 0) {
-        return e1.compareTo(e2);
-      }
-      return fCompare;
-    });
-    for (int i = 0; i < result.length; ++i) {
-      result[i]['schedule']['start_time'] = DateFormat.Hm().format(result[i]['schedule']['start_time']);
-      result[i]['schedule']['end_time'] = DateFormat.Hm().format(result[i]['schedule']['end_time']);
-    }
-    return result;
+  Stream<List<Map>> getAllEventList() {
+    return _eventCollection
+            .where('schedule.end_time', isGreaterThanOrEqualTo: DateTime.now())
+            .snapshots()
+            .map((snapshot) {
+              return snapshot.documents.map((doc) {
+                Map modifiedDoc = doc.data;
+                modifiedDoc['event_id'] = doc.documentID;
+                modifiedDoc['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['start_time'].seconds * 1000));
+                modifiedDoc['stime'] = DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['start_time'].seconds * 1000);
+                modifiedDoc['etime'] = DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['end_time'].seconds * 1000);
+                modifiedDoc['schedule']['start_time'] = DateFormat.Hm().format(modifiedDoc['stime']);
+                modifiedDoc['schedule']['end_time'] = DateFormat.Hm().format(modifiedDoc['etime']);
+                return modifiedDoc;
+              }).toList();
+            });
   }
 
   Future<bool> hasEventTimeOverlapped({int roomId, DateTime selectedDate, DateTime startTime, DateTime endTime}) async {

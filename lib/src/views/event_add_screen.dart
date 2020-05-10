@@ -18,31 +18,52 @@ class EventAddScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            if (state is Unauthenticated) {
-              Navigator.of(context).pop();
-            }
-          },
-          child: BlocProvider<BookingBloc>(
-            create: (context) => BookingBloc(userId: _userId)..add(LoadingStarted()),
-            child: Column(
-              children: [
-                _HeaderEventAdd(),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: _SectionEventAdd(),
-                  )
-                ),
-              ],
+    return WillPopScope(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if (state is Unauthenticated) {
+                Navigator.of(context).pop();
+              }
+            },
+            child: BlocProvider<BookingBloc>(
+              create: (context) => BookingBloc(userId: _userId)..add(LoadingStarted()),
+              child: Column(
+                children: [
+                  _HeaderEventAdd(),
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: _SectionEventAdd(),
+                    )
+                  ),
+                ],
+              ),
             ),
-          ),
+          )
         )
-      )
+      ),
+      onWillPop: () async {
+        return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure?', style: GoogleFonts.openSans()),
+            content: Text('You didn\'t finish the form yet', style: GoogleFonts.openSans()),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Continue editing'),
+              ),
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('Discard'),
+              ),
+            ],
+          ),
+        )) ?? false;
+      }
     );
   }
 }
@@ -53,7 +74,7 @@ class _HeaderEventAdd extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(208, 219, 217, 1.0),
+        color: Color.fromRGBO(229, 229, 255, 1.0),
       ),
       child: Row(
         children: [
@@ -92,7 +113,7 @@ class _SectionEventAdd extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: Color.fromRGBO(208, 219, 217, 1.0)),
+      decoration: BoxDecoration(color: Color.fromRGBO(229, 229, 255, 1.0)),
       child: BlocListener<BookingBloc, BookingState>(
         listener: (context, state) async {
           if (state.isSuccess) {
@@ -243,6 +264,7 @@ class _FormFirstPageState extends State<_FormFirstPage> {
               BlocBuilder<BookingBloc, BookingState>(
                 builder: (context, state) {
                   return RaisedButton(
+                    color: Colors.white,
                     onPressed: state.title.isNotEmpty
                     ? () {
                       BlocProvider.of<BookingBloc>(context).add(DetailUpdated(detail: _detailFieldController.text));
@@ -323,6 +345,7 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                   ),
                   SizedBox(width: 12.0,),
                   RaisedButton(
+                    color: Colors.white,
                     onPressed: (state.tags.length < 5) 
                     ? () {
                       String tagName = _tagFieldController.text.trim().replaceAll(RegExp(' +'), ' '); 
@@ -343,6 +366,7 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RaisedButton(
+                    color: Colors.white,
                     onPressed: () {
                       _pageFormController.previousPage(
                         duration: Duration(milliseconds: 300),
@@ -352,6 +376,7 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                     child: Text('Prev', style: GoogleFonts.openSans()),
                   ),
                   RaisedButton(
+                    color: Colors.white,
                     onPressed: () {
                       _pageFormController.nextPage(
                         duration: Duration(milliseconds: 300),
@@ -536,6 +561,7 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RaisedButton(
+                    color: Colors.white,
                     onPressed: () {
                       _pageFormController.previousPage(
                         duration: Duration(milliseconds: 300),
@@ -545,6 +571,7 @@ class _FormThirdPageState extends State<_FormThirdPage> {
                     child: Text('Prev', style: GoogleFonts.openSans()),
                   ),
                   RaisedButton(
+                    color: Colors.white,
                     onPressed: (!state.isRoomTimeValid || state.isSubmitting)
                     ? null
                     : () {
