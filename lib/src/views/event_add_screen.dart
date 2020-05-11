@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:badges/badges.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:LXD/src/authentication/authentication_bloc.dart';
 import 'package:LXD/src/controllers/booking/bloc.dart';
@@ -54,11 +55,11 @@ class EventAddScreen extends StatelessWidget {
             actions: <Widget>[
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text('Continue editing'),
+                child: Text('Continue editing', style: GoogleFonts.openSans(color: Colors.grey)),
               ),
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('Discard'),
+                child: Text('Discard', style: GoogleFonts.openSans(color: Colors.red)),
               ),
             ],
           ),
@@ -328,6 +329,8 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                       keyboardType: TextInputType.text,
                       controller: _tagFieldController,
                       style: GoogleFonts.openSans(fontSize: 19.0),
+                      autocorrect: false,
+                      autofocus: false,
                       decoration: InputDecoration(
                         hintText: 'Type here',
                         hintStyle: GoogleFonts.openSans(),
@@ -359,8 +362,17 @@ class _FormSecondPageState extends State<_FormSecondPage> {
                 ]
               ),
               SizedBox(height: 16.0,),
-              for (int i = 0; i < 5; ++i)
-                  _TagItem(index: i, value: (i < state.tags.length)? '${state.tags[i]}': '', shouldActivate: i < state.tags.length),
+              Center(
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runSpacing: 6.0,
+                  children: [
+                    for (int i = 0; i < state.tags.length; ++i)
+                      _TagItem(index: i, value: '${state.tags[i]}'),
+                  ],  
+                ),
+              ),
               SizedBox(height: 16.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -398,12 +410,10 @@ class _FormSecondPageState extends State<_FormSecondPage> {
 class _TagItem extends StatelessWidget {
   final int _index;
   final String _value;
-  final bool _shoudActivate;
 
-  _TagItem({@required index, @required value, @required shouldActivate})
+  _TagItem({@required index, @required value})
       : _index = index,
-        _value = value,
-        _shoudActivate = shouldActivate;
+        _value = value;
 
   void _deleteTagDialog(context) async {
     bool result = (await showDialog(
@@ -430,25 +440,29 @@ class _TagItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 12.0),
-      child: Opacity(
-        opacity: _shoudActivate? 1.0: 0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return Padding(
+      padding: EdgeInsets.only(left: 4.0),
+      child: Badge(
+        badgeColor: Color.fromRGBO(166, 200, 200, 1.0),
+        padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+        shape: BadgeShape.square,
+        borderRadius: 20,
+        toAnimate: false,
+        badgeContent: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('$_value', style: GoogleFonts.openSans(fontSize: 17.0),),
-            SizedBox(width: 16.0,),
+            Text('$_value', style: GoogleFonts.openSans(color: Colors.black)),
+            SizedBox(width: 6.0,),
             GestureDetector(
-              onTap: _shoudActivate
-              ? () {
+              onTap: () {
                 _deleteTagDialog(context);
-              }: null,
-              child: Icon(FontAwesomeIcons.trashAlt, color: Colors.redAccent,),
+              },
+              child: Icon(FontAwesomeIcons.times, color: Colors.redAccent, size: 16.0),
             )
           ],
         ),
-      )
+      ),
     );
   }
 }

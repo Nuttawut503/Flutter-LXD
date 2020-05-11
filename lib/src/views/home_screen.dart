@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:badges/badges.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:LXD/src/views/setting_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:LXD/src/views/event_add_screen.dart';
@@ -47,18 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   imageProvider: AssetImage('images/FirstFloorPlan3d.png'),
                   minScale: PhotoViewComputedScale.contained * 0.8,
                   maxScale: PhotoViewComputedScale.covered * 1.5,
-                  initialScale: PhotoViewComputedScale.contained * 1.0,
+                  initialScale: PhotoViewComputedScale.contained * 1.3,
                 ),
-              ),
-              BlocProvider<EventBloc>(
-                create: (context) => EventBloc()..add(LoadingStarted()),
-                child: _EventSheet(), 
               ),
               Positioned(
                 top: 16.0,
                 right: 16.0,
                 child: _FloatingButton(),
-              )
+              ),
+              BlocProvider<EventBloc>(
+                create: (context) => EventBloc()..add(LoadingStarted()),
+                child: _EventSheet(), 
+              ),
             ],
           ),
         ),
@@ -86,8 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Intriguing Information', style: GoogleFonts.openSans(color: Colors.blue),),
+                      padding: EdgeInsets.all(4.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Intriguing Information', style: GoogleFonts.openSans(color: Colors.blue),),
+                          SizedBox(width: 4.0,),
+                          Image.asset('images/ibis/rule_icon.png', width: 36.0, height: 36.0, fit: BoxFit.cover),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 8.0),
@@ -101,8 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Create an event', style: GoogleFonts.openSans(color: Colors.blue),),
+                        padding: EdgeInsets.all(4.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Create an event', style: GoogleFonts.openSans(color: Colors.blue),),
+                            SizedBox(width: 4.0,),
+                            Image.asset('images/ibis/event_add_icon.png', width: 36.0, height: 36.0, fit: BoxFit.cover),
+                          ],
+                        ),
                       ),
                     ),
                   Spacer(),
@@ -116,13 +131,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text('Manage your account', style: GoogleFonts.openSans(color: Colors.blue),),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Manage your account', style: GoogleFonts.openSans(color: Colors.blue),),
+                          SizedBox(width: 4.0),
+                          Icon(FontAwesomeIcons.cog, size: 16.0, color: Colors.blue),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 24.0,),
                 ],
               ),
-            )
+            ),
           ),
         ),
       ), 
@@ -166,7 +189,7 @@ class _FloatingButton extends StatelessWidget {
             customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
             child: Container(
               padding: EdgeInsets.all(12.0),
-              child: Icon(FontAwesomeIcons.bars),
+              child: Icon(FontAwesomeIcons.bars, size: 26.0,),
             ),
           )
         ),
@@ -203,7 +226,7 @@ class _FloatingButton extends StatelessWidget {
               child: Badge(
                 position: BadgePosition.bottomRight(bottom: -7.5, right: -5.0),
                 badgeContent: Text('N', style: GoogleFonts.openSans(color: Colors.white, fontSize: 9.0)),
-                child: Icon(FontAwesomeIcons.bell),
+                child: Icon(FontAwesomeIcons.bell, size: 26.0,),
               ),
             ),
           )
@@ -223,10 +246,10 @@ class _FloatingButton extends StatelessWidget {
             splashColor: Colors.black.withOpacity(0.3),
             customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
             child: Container(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(FontAwesomeIcons.mapMarkedAlt, color: Colors.green),
+              padding: EdgeInsets.all(8.0),
+              child: Image.asset('images/ibis/google_map_icon.png', width: 34.0, height: 34.0),
             ),
-          )
+          ),
         ),
       ],
     );
@@ -284,12 +307,13 @@ class __EventSheetState extends State<_EventSheet> {
   @override
   Widget build(BuildContext context) {
     return SlidingSheet(
+      color: Color.fromRGBO(255, 255, 255, 0.9),
       padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 16.0, right: 16.0),
       elevation: 8,
       cornerRadius: 16,
       snapSpec: SnapSpec(
         snap: true,
-        snappings: [80, MediaQuery.of(context).size.height * 0.8],
+        snappings: [80, MediaQuery.of(context).size.height * 0.35, MediaQuery.of(context).size.height * 0.8],
         positioning: SnapPositioning.pixelOffset,
       ),
       headerBuilder: (context, state) {
@@ -299,7 +323,7 @@ class __EventSheetState extends State<_EventSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(height: 4.0, width: 55.0, decoration: BoxDecoration(color: Colors.grey),),
+              Container(height: 4.0, width: 55.0, decoration: BoxDecoration(color: Colors.grey[400]),),
               SizedBox(height: 8.0,),
               Expanded(
                 child: Center(
@@ -439,7 +463,7 @@ class _EventCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(9.0),
       ),
-      color: Color.fromRGBO(248, 248, 248, 1.0),
+      color: Color.fromRGBO(255, 255, 255, 1.0),
       child: ListTile(
         title: Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
@@ -447,9 +471,10 @@ class _EventCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$_title', style: GoogleFonts.openSans(fontSize: 19.0, fontWeight: FontWeight.w600),),
-            Text('Room: $_room', style: GoogleFonts.openSans(fontSize: 14.0),),
-            Text('($_date) $_stime - $_etime', style: GoogleFonts.openSans(fontSize: 14.0),),
+            Text('$_date  $_stime - $_etime', style: GoogleFonts.openSans(fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.red)),
+            Text('$_title', style: GoogleFonts.openSans(fontSize: 19.0, fontWeight: FontWeight.w700),),
+            Text('at $_room', style: GoogleFonts.openSans(fontSize: 14.0, color: Color.fromRGBO(69, 69, 69, 1.0)),),
+            SizedBox(height: 4.0,),
             if (_tags != null)
               _tagList
           ],

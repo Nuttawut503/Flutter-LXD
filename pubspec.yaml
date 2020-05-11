@@ -57,9 +57,7 @@ flutter:
     - images/icon_launcher.png
     - images/logo_app.png
     - images/background_login.png
-    - images/ibis/event_view_icon.png
+    - images/FirstFloorPlan3d.png
     - images/ibis/event_add_icon.png
     - images/ibis/rule_icon.png
-    - images/ibis/building_plan_icon.png
     - images/ibis/google_map_icon.png
-    - images/FirstFloorPlan3d.png

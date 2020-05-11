@@ -46,7 +46,7 @@ class EventRepository {
               return snapshot.documents.map((doc) {
                 Map modifiedDoc = doc.data;
                 modifiedDoc['event_id'] = doc.documentID;
-                modifiedDoc['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['start_time'].seconds * 1000));
+                modifiedDoc['schedule']['date'] = DateFormat('EEE,MMM d').format(DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['start_time'].seconds * 1000)).toUpperCase();
                 modifiedDoc['stime'] = DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['start_time'].seconds * 1000);
                 modifiedDoc['etime'] = DateTime.fromMillisecondsSinceEpoch(modifiedDoc['schedule']['end_time'].seconds * 1000);
                 modifiedDoc['schedule']['start_time'] = DateFormat.Hm().format(modifiedDoc['stime']);
