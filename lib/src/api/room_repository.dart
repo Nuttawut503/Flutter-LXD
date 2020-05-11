@@ -15,8 +15,8 @@ class RoomRepository {
     return result;
   }
 
-  Future<String> getRoomNameById(roomId) async {
-    return (await roomCollection.where('id', isEqualTo: roomId).getDocuments()).documents[0].data['name'];
+  Future<Map> getRoomNameById(roomId) async {
+    return (await roomCollection.where('id', isEqualTo: roomId).getDocuments()).documents[0].data;
   }
 
   Future<bool> isRoomTimeOverlapped({int roomId, DateTime selectedDate, DateTime startTime, DateTime endTime}) async {

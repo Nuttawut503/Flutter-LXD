@@ -158,11 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: <Widget>[
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text('No'),
+                child: Text('No', style: GoogleFonts.openSans()),
               ),
               FlatButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('Yes'),
+                child: Text('Yes', style: GoogleFonts.openSans()),
               ),
             ],
           ),
@@ -273,7 +273,7 @@ class __EventSheetState extends State<_EventSheet> {
     showDialog(
       context: context,
       builder: (innerContext) => AlertDialog(
-        title: Text('Choose the room you want', style: GoogleFonts.openSans()),
+        title: Text('Show all event in...', style: GoogleFonts.openSans()),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -297,7 +297,7 @@ class __EventSheetState extends State<_EventSheet> {
         actions: <Widget>[
           FlatButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Back'),
+            child: Text('Back', style: GoogleFonts.openSans()),
           ),
         ],
       ),

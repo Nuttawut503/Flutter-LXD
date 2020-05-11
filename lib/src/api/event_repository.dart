@@ -32,7 +32,7 @@ class EventRepository {
 
   Future<Map> getEventDetailById(eventId) async {
     Map result = (await _eventCollection.document('$eventId').get()).data;
-    result['schedule']['date'] = DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['start_time'].seconds * 1000));
+    result['schedule']['date'] = DateFormat('yyyy EEE, MMM d').format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['start_time'].seconds * 1000));
     result['schedule']['start_time'] = DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['start_time'].seconds * 1000));
     result['schedule']['end_time'] = DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(result['schedule']['end_time'].seconds * 1000));
     return result;

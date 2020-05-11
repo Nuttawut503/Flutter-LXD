@@ -31,7 +31,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     try {
       Map eventDetail = await _eventRepository.getEventDetailById(_eventId);
       eventDetail['reserver_name'] = await _userRepository.findNameOfUserById(eventDetail['reserver_id']);
-      eventDetail['room_name'] = await _roomRepository.getRoomNameById(int.parse(eventDetail['room_id']));
+      eventDetail['room'] = await _roomRepository.getRoomNameById(int.parse(eventDetail['room_id']));
       yield DetailState.update(eventDetail);
     } catch (_) {
       yield DetailState.failure();
