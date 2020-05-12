@@ -362,20 +362,20 @@ class _ContentRule extends StatelessWidget {
                 child: ListBody(
                   children: <Widget>[
                     SizedBox(height: 10,),
-                    Text('นักศึกษาชาย' +
-                    '\n \n-เสื้อ เสื้อเชิ้ตสีขาว แขนสั้น หรือแขนยาว สอดชายเสื้อในกางเกง' +
-                    '\n \n-กางเกง ขายาว สีและแบบสุภาพ มีหูเข็มขัด' +
-                    '\n \n-เข็มขัด หนังสีดำหรือสีน้ำตาล หัวเข็มขัดรูปเครื่องหมายมหาวิทยาลัย' +
-                    '\n \n-รองเท้า หุ้มส้น แบบและสีสุภาพ', textAlign: TextAlign.left,),
+                    Text('Male Student' +
+                    '\n \n -White shirt with short sleeves or long sleeves with hem in the pants' +
+                    '\n \n-Long pants in polite style and with belt buckle' +
+                    '\n \n-Black or brown leather belt with university shaped buckle' +
+                    '\n \n-Brogue shoes with polite colors', textAlign: TextAlign.left,),
                     SizedBox(height: 10,),
                     Text('-----------------------------------------------------------'),
                     SizedBox(height: 10,),
-                    Text('นักศึกษาหญิง' +
-                    '\n \n-เสื้อเชิ้ตสีขาวแขนสั้น ผ่าหน้าตลอด ติดกระดุมเครื่องหมายมหาวิทยาลัย' +
-                        '\n \n-5 เม็ด เวลาสวมให้สอดชายเสื้อไว้ในกระโปรง มีเข็มเครื่องหมาย มหาวิทยาลัย ติดอกเสื้อด้านซ้าย' +
-                      '\n \n-กระโปรง สีกรมท่า สีดำ สีน้ำตาล สีเทา ความยาวคลุมเข่า' +
-                      '\n \n-เข็มขัด สีดำหรือสีน้ำตาล หัวเข็มขัดรูปเครื่องหมายมหาวิทยาลัย' +
-                      '\n \n-รองเท้า หุ้มส้น สีและแบบสุภาพ'),
+                    Text('Female Student' +
+                    '\n \n-White shirt, short sleeves, all over the front, buttoning up with the university logo' +
+                        '\n \n-5 beads when wearing, put the hem in the skirt There is a university pin on the left chest.' +
+                      '\n \n-Dark black, brown, gray skirt, knee length' +
+                      '\n \n-Black or brown belt with university shaped buckle' +
+                      '\n \n-Brogan shoes with polite colors'),
                     SizedBox(height: 10,),
 //                    SizedBox(height: 10,),
 //                    Text('${ruleDetails[2]}'),
@@ -403,7 +403,7 @@ class _ContentRule extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 10,),
                     Text("Project background :" +
-                        "\n\nอาคารการเรียนรู้พหุวิทยาการเป็นอาคารที่มีการออกแบบให้สอดคล้องกับการเรียนการสอนในรูปแบบใหม่ ที่กล่าวถึงการสร้างสภาพแวดล้อมให้เหมาะสมกับการเรียนรู้ทั้งในและนอกห้องเรียน (Learning and Living Campus) ตามที่มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรีมีเป้าหมายในการพัฒนาและปรับปรุงกระบวนการเรียนการสอน สนับสนุนให้ผู้ใช้งานอาคาร สามารถรับรู้สารสนเทศพหุวิทยาการโดยอาศัยเทคโนโลยีการสื่อสารและสารสนเทศ (Information  and Communication Technology)"),
+                        "\n\nThe Multidisciplinary Learning Building is a building designed in accordance with the new teaching and learning style. That describes creating a suitable environment for learning both in and out of the classroom (Learning and Living Campus) as King Mongkut's University of Technology Thonburi aims to develop and improve the teaching and learning process Support building users Able to perceive multidisciplinary information through information and communication technology"),
                     SizedBox(height: 10,),
 
                   ],
@@ -428,7 +428,7 @@ class _ContentRule extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 10,),
                     Text('Flip-Classroom' +
-                      '\n\nพื้นที่อเนกประสงค์สำหรับกิจกรรมต่างๆ รองรับผู้ใช้สอยได้ 30-40 คน Multi-Disciplinary Workshop/ Lab Space พื้นที่อเนกประสงค์ที่มีอุปกรณ์รองรับการปฏิบัติการและการวิจัยแบบสหวิทยาการ รวมทั้งเป็นพื้นที่พัฒนา Collaborative Working Space พื้นที่สำหรับเรียนรู้ร่วมกันอย่างไม่เป็นทางการ มีลักษณะเป็น Lounge หรือพื้นที่ในแนวทางสัญจร'),
+                      '\n\nMultipurpose area for various activities Accommodate up to 30-40 people. Multi-Disciplinary Workshop / Lab Space A multipurpose space with interdisciplinary operations and research equipment. Including a development area Collaborative Working Space, an informal space for shared learning, is a lounge or traveling area.'),
                     SizedBox(height: 10,),
                   ],
                 ),
@@ -452,7 +452,7 @@ class _ContentRule extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 10,),
                     Text('Public Space' +
-                        '\n\nพพื้นที่อเนกประสงค์สำหรับกิจกรรมต่างๆ รองรับผู้ใช้สอยได้ 30-40 คน Multi-Disciplinary Workshop/ Lab Space พื้นที่อเนกประสงค์ที่มีอุปกรณ์รองรับการปฏิบัติการและการวิจัยแบบสหวิทยาการ รวมทั้งเป็นพื้นที่พัฒนา บุคลากรส่งเสริมการเรียนรู้ให้เกิดทักษะเฉพาะทาง Collaborative Working Space พื้นที่สำหรับเรียนรู้ร่วมกันอย่างไม่เป็นทางการ มีลักษณะเป็น Lounge หรือพื้นที่ในแนวทางสัญจ'),
+                        '\n\nพA multipurpose space for various activities Accommodate up to 30-40 people. Multi-Disciplinary Workshop / Lab Space A multipurpose space with interdisciplinary operations and research equipment. Including a development area Personnel promote learning to create specific skills. Collaborative Working Space, an informal space for shared learning, is a lounge or space in the contract guidelines.'),
                     SizedBox(height: 10,),
                   ],
                 ),
@@ -476,7 +476,7 @@ class _ContentRule extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 10,),
                     Text('Learning Support' +
-                        '\n\nห้องควบคุมระบบข้อมูลต่างๆ ของมหาวิทยาลัย เนื่องจากอาคารนี้จะต้องเป็น Interactive Data Center คือสามารถสืบค้น สร้างสรรค์ และจัดเก็บข้อมูลที่เกี่ยวเนื่องกับการประสานการเรียนรู้ ผ่านทางระบบอินเตอร์เน็ต ระบบ Data Center จึงมีความสำคัญมากและเป็นเสมือนคลังสมองของมหาวิทยาลัย และที่ขาดไม่ได้คืองานระบบประกอบอาคาร และสำนักงานเจ้าหน้าที่ ที่อำนวยการให้อาคารสามารถใช้งานได้อย่างมีประสิทธิภาพนอกจากเรื่องการเรียนการสอน รูปแบบใหม่แล้ว มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรียังมีความต้องการพื้นที่รองรับนักศึกษาและเจ้าหน้าที่ที่มีจำนวนเพิ่มขึ้น สำหรับ 2 หน่วยงาน คือ สำนักคอมพิวเตอร์ และคณะเทคโนโลยีสารสนเทศ ซึ่งออกแบบให้อยู่บริเวณพื้นที่ชั้นบนของอาคาร'),
+                        '\n\nInformation system control room Of the university Because this building must be an Interactive Data Center which is able to search, create and store information related to learning coordination. Through the Internet, the Data Center system is very important and is like the brain of the university. And that is indispensable is the building assembly system And office staff That allows the building to be used effectively.'),
                     SizedBox(height: 10,),
                   ],
                 ),
