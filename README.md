@@ -5,7 +5,7 @@ A new Flutter project.
 ## Team members
 
 -   **Chaichet Phaibunwitthayasak** [@mrforgotten](http://www.github.com/mrforgotten)
--   **Nuttawut Promsuk** [@einsxort](http://www.github.com/einsxort)
+-   **Nuttawut Promsuk** [@Nuttawut503](http://www.github.com/Nuttawut503)
 -   **Napat Jamjan** [@FinaleFunkeln](http://www.github.com/FinaleFunkeln)
 -   **Thetawat Kongyu** [@domesama](https://github.com/domesama)
 
